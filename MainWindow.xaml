@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Benchmark_Assignment"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1000">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="400"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Canvas Grid.Column="1" Background="#393637"></Canvas>
 
+        <Canvas Grid.Column="0" x:Name="mainCanvas">
+            <Canvas.Background>
+                <ImageBrush  ImageSource="/Benchmark Assignment;component/images/BlueSky.jpg"/>
+            </Canvas.Background>
+            <Grid  x:Name="BluejetStack" Canvas.Left="200" Canvas.Right="120" Canvas.Bottom="30" Canvas.Top="114"  Height="80" Width="80">
+                <Image x:Name="Bluejet" Margin="0,10,0,0"></Image>
+                <!-- you can add as many images as you want in this fashion-->
+            </Grid>
+        </Canvas>
+        <ListBox x:Name="ListBox"  VerticalAlignment="Top" Grid.Column="1" Width="380" Height="250" Margin="0,5,0,0"/>
+        <StackPanel Orientation="Horizontal" Grid.Column =" 1" Margin="0,5,5,0" HorizontalAlignment="Center">
+            <Button Content="Load intial data" Width="100" Height="50" Click="Button_Click" ></Button>
+        </StackPanel>
     </Grid>
 </Window>
