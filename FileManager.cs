@@ -2,7 +2,7 @@
 
 namespace Benchmark_Assignment
 {
-    internal class FileManager
+    class FileManager
     {
         private const string FileName = "ImageData.txt";
 
@@ -23,7 +23,7 @@ namespace Benchmark_Assignment
 
         public string LoadData()
         {
-            string? data = null;
+            string data = null;
 
             try
             {

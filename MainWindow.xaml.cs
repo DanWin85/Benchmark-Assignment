@@ -19,7 +19,7 @@ namespace Benchmark_Assignment
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
+
     public partial class MainWindow : Window
     {
         private FileManager? fileManager;
@@ -27,19 +27,69 @@ namespace Benchmark_Assignment
         DispatcherTimer timer = new DispatcherTimer();
         List<MyClass> Initial_data = new List<MyClass>();
 
-        private string Image1directionx = "up";
-        
+        private string Image1directionx = "right";
+
         private string Image1directionY = "down";
+
+        private string Image2directionx = "right";
+
+        private string Image2directionY = "down";
         public MainWindow()
         {
             InitializeComponent();
             fileManager = new FileManager();
         }
 
-      
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string loadedData = fileManager.LoadData();
 
+            // Check if the loaded data is not null
+            if (!string.IsNullOrEmpty(loadedData))
+            {
+                string[] lines = loadedData.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
+                // Declare a list to store the image information
+                List<MyClass> initialData = new List<MyClass>();
 
+                // Iterate through each line
+                foreach (string line in lines)
+                {
+                    // Split the line into an array using commas
+                    string[] values = line.Split(',');
+
+                    // Check if the array has the expected number of elements
+                    if (values.Length == 6)
+                    {
+                        // Trim the whitespace from the values
+                        string[] trimmedValues = values.Select(v => v.Trim()).ToArray();
+
+                        // Create a new instance of MyClass using the trimmed values
+                        MyClass imageInfo = new MyClass(trimmedValues[0], trimmedValues[1], trimmedValues[2], trimmedValues[3], trimmedValues[4], trimmedValues[5]);
+
+                        // Add the image information to the list
+                        initialData.Add(imageInfo);
+                    }
+                }
+
+                // Clear the ListBox items
+                ListBox.Items.Clear();
+
+                // Add each image information to the ListBox
+                foreach (var imageInfo in initialData)
+                {
+                    ListBox.Items.Add(imageInfo);
+                }
+
+                // Call the LoadImage method
+                LoadImage();
+            }
+            else
+            {
+                // Handle the case where the loaded data is null or empty
+                MessageBox.Show("Error loading data. The file may be empty or not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         public void LoadImage()
         {
@@ -55,10 +105,16 @@ namespace Benchmark_Assignment
             if (Name.Contains("fighterjet"))
             {
                 //Creating a Uri object img1. Loading the relative image pathway
-                Uri img1 = new Uri("fighterjet.jpg", UriKind.Relative);
+                Uri img1 = new Uri("pack://application:,,,/images/fighterjet.jpg");
                 //Making the image1 source equal to object pathway
                 Image1.Source = new BitmapImage(img1);
                 //Once loaded the custom method below will help animate the loaded object
+                ImageAnimation();
+            }
+            if (Name.Contains("vintageaircraft"))
+            {
+                Uri img2 = new Uri("pack://application:,,,/images/vintageaircraft.jpg");
+                Image2.Source = new BitmapImage(img2);
                 ImageAnimation();
             }
             //try loading another image of your choice - this requires adding another image control to the XAML, adding new image to this application and its info. to the text file (like Sheep) 
@@ -90,9 +146,12 @@ namespace Benchmark_Assignment
             }
             //converting speed x cordinate to double varible
             double image1speedX = Convert.ToDouble(Speed_x[0]);
-            //Getting left property of the image 1 grid stack with respect to canvas
+           
+
+            //Getting left property of the image grid stack with respect to canvas
             long image1Positionx = Convert.ToInt64(Image1Stack.GetValue(Canvas.LeftProperty));
-            //if condition checking if Image one position x is greater or equal to 390
+            
+            //if condition checking if Image position x is greater or equal to 390
             if (image1Positionx >= 390)
             {
                 //setting image one direction to left
@@ -117,6 +176,34 @@ namespace Benchmark_Assignment
                 //Maving Image one on x axis to the right by adding image1speedX
                 Canvas.SetLeft(Image1Stack, image1Positionx + image1speedX);
             }
+
+            double image2speedX = Convert.ToDouble(Speed_x[0]);
+
+            long image2Positionx = Convert.ToInt64(Image1Stack.GetValue(Canvas.LeftProperty));
+            if (image2Positionx >= 390)
+            {
+                //setting image one direction to left
+                Image2directionx = "left";
+            }
+            //if condition checking if Image one direction is left
+            if (Image2directionx.Contains("left"))
+            {
+                //Maving Image one on x axis to the left by subtracting image1speedX
+                Canvas.SetLeft(Image2Stack, image2Positionx - image2speedX);
+            }
+
+            //if condition checking if Image one position x is less then or equal to 5
+            if (image2Positionx <= 5)
+            {
+                //setting image one direction X to right
+                Image2directionx = "right";
+            }
+            //if condition checking if Image one direction is right
+            if (Image2directionx.Contains("right"))
+            {
+                //Maving Image one on x axis to the right by adding image1speedX
+                Canvas.SetLeft(Image2Stack, image2Positionx + image2speedX);
+            }
         }
 
         //Timer Method2
@@ -134,8 +221,10 @@ namespace Benchmark_Assignment
 
             //converting speed y cordinate to double varible
             double image1speedY = Convert.ToDouble(Speed_y[0]);
+           
             //Getting Top property of the image 1 grid stack with respect to canvas
             long image1PositionY = Convert.ToInt64(Image1Stack.GetValue(Canvas.TopProperty));
+            
 
             //if condition is checking if Image one position y is greater or equal to 355
             if (image1PositionY >= 355)
@@ -164,62 +253,36 @@ namespace Benchmark_Assignment
                 //Maving Image one on y axis downwards by adding image1speedX
                 Canvas.SetTop(Image1Stack, image1PositionY + image1speedY);
             }
+            double image2speedY = Convert.ToDouble(Speed_y[0]);
 
+            long image2PositionY = Convert.ToInt64(Image1Stack.GetValue(Canvas.TopProperty));
 
-        }
-
-   
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string loadedData = fileManager.LoadData();
-
-            // Check if the loaded data is not null
-            if (!string.IsNullOrEmpty(loadedData))
+            if (image2PositionY >= 355)
             {
-                string[] lines = loadedData.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-                // Declare a list to store the image information
-                List<MyClass> initialData = new List<MyClass>();
-
-                // Iterate through each line
-                foreach (string line in lines)
-                {
-                    // Split the line into an array using commas
-                    string[] values = line.Split(',');
-
-                    // Check if the array has the expected number of elements
-                        if (values.Length == 6)
-                        {
-                            // Trim the whitespace from the values
-                            string[] trimmedValues = values.Select(v => v.Trim()).ToArray();
-
-                            // Create a new instance of MyClass using the trimmed values
-                            MyClass imageInfo = new MyClass(trimmedValues[0], trimmedValues[1], trimmedValues[2], trimmedValues[3], trimmedValues[4], trimmedValues[5]);
-
-                            // Add the image information to the list
-                            initialData.Add(imageInfo);
-                        }
-                }
-
-                // Clear the ListBox items
-                ListBox.Items.Clear();
-
-                // Add each image information to the ListBox
-                foreach (var imageInfo in initialData)
-                {
-                    ListBox.Items.Add(imageInfo);
-                }
-
-                // Call the LoadImage method
-                LoadImage();
+                //setting image one direction Y to up
+                Image2directionY = "up";
             }
-            else
+
+            //if condition is checking if Image one Y direction is up
+            if (Image2directionY.Contains("up"))
             {
-                // Handle the case where the loaded data is null or empty
-                MessageBox.Show("Error loading data. The file may be empty or not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //Maving Image one on y axis upwards by subtracting image1speedX
+                Canvas.SetTop(Image2Stack, image2PositionY - image2speedY);
             }
-        }
+
+            //if condition is checking if Image one position y is less than or equal to 5
+            if (image2PositionY <= 5)
+            {
+                //setting image one direction Y to down
+                Image2directionY = "down";
+            }
+
+            //if condition is checking if Image one Y direction is down
+            if (Image2directionY.Contains("down"))
+            {
+                //Maving Image one on y axis downwards by adding image1speedX
+                Canvas.SetTop(Image2Stack, image2PositionY + image2speedY);
+            }
         }
     }
+}
