@@ -11,8 +11,8 @@
 
   <ItemGroup>
     <None Remove="BlueSky.jpg" />
+    <None Remove="ImageData.txt" />
     <None Remove="images\Bluejet.jpg" />
-    <None Remove="images\BluePassengerjet.jpg" />
     <None Remove="images\fighterjet.jpg" />
     <None Remove="images\lightaircraft.jpg" />
     <None Remove="images\RedHelicopter.jpg" />
@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Bluejet.jpg">
+    <Content Include="ImageData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\BluePassengerjet.jpg">
+    <Content Include="images\Bluejet.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -32,9 +32,9 @@
     <Content Include="images\BlueSky.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\fighterjet.jpg">
+    <Resource Include="fighterjet.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <Content Include="images\lightaircraft.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -44,12 +44,6 @@
     <Content Include="images\vintageaircraft.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="ImageData.txt">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

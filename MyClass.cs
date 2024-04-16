@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Benchmark_Assignment
 {
-    public class MyClass
+     class MyClass
     {
         string name;
 

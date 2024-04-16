@@ -22,17 +22,18 @@ namespace Benchmark_Assignment
     
     public partial class MainWindow : Window
     {
-        private FileManager fileManager = new FileManager();
+        private FileManager? fileManager;
 
         DispatcherTimer timer = new DispatcherTimer();
         List<MyClass> Initial_data = new List<MyClass>();
 
-        private string Bluejetdirectionx = "right";
+        private string Image1directionx = "up";
         
-        private string Bluejetdirectiony = "down";
+        private string Image1directionY = "down";
         public MainWindow()
         {
             InitializeComponent();
+            fileManager = new FileManager();
         }
 
       
@@ -51,12 +52,12 @@ namespace Benchmark_Assignment
             }
 
             //If condition is checking the name of the image so the relevant image can be loaded on the canvas.
-            if (Name.Contains("Bluejet"))
+            if (Name.Contains("fighterjet"))
             {
                 //Creating a Uri object img1. Loading the relative image pathway
-                Uri Bluejet = new Uri("Bluejet.jpg", UriKind.Relative);
+                Uri img1 = new Uri("fighterjet.jpg", UriKind.Relative);
                 //Making the image1 source equal to object pathway
-                BitmapImage bluejetImage = new BitmapImage(Bluejet);
+                Image1.Source = new BitmapImage(img1);
                 //Once loaded the custom method below will help animate the loaded object
                 ImageAnimation();
             }
@@ -88,33 +89,33 @@ namespace Benchmark_Assignment
                 Speed_x.Add(c.Speed_x.TrimStart('-'));
             }
             //converting speed x cordinate to double varible
-            double BluejetspeedX = Convert.ToDouble(Speed_x[0]);
+            double image1speedX = Convert.ToDouble(Speed_x[0]);
             //Getting left property of the image 1 grid stack with respect to canvas
-            long BluejetPositionx = Convert.ToInt64(BluejetStack.GetValue(Canvas.LeftProperty));
+            long image1Positionx = Convert.ToInt64(Image1Stack.GetValue(Canvas.LeftProperty));
             //if condition checking if Image one position x is greater or equal to 390
-            if (BluejetPositionx >= 390)
+            if (image1Positionx >= 390)
             {
                 //setting image one direction to left
-                Bluejetdirectionx = "left";
+                Image1directionx = "left";
             }
             //if condition checking if Image one direction is left
-            if (Bluejetdirectionx.Contains("left"))
+            if (Image1directionx.Contains("left"))
             {
                 //Maving Image one on x axis to the left by subtracting image1speedX
-                Canvas.SetLeft(BluejetStack, BluejetPositionx - BluejetspeedX);
+                Canvas.SetLeft(Image1Stack, image1Positionx - image1speedX);
             }
 
             //if condition checking if Image one position x is less then or equal to 5
-            if (BluejetPositionx <= 5)
+            if (image1Positionx <= 5)
             {
                 //setting image one direction X to right
-                Bluejetdirectionx = "right";
+                Image1directionx = "right";
             }
             //if condition checking if Image one direction is right
-            if (Bluejetdirectionx.Contains("right"))
+            if (Image1directionx.Contains("right"))
             {
                 //Maving Image one on x axis to the right by adding image1speedX
-                Canvas.SetLeft(BluejetStack, BluejetPositionx + BluejetspeedX);
+                Canvas.SetLeft(Image1Stack, image1Positionx + image1speedX);
             }
         }
 
@@ -132,36 +133,36 @@ namespace Benchmark_Assignment
             }
 
             //converting speed y cordinate to double varible
-            double BluejetspeedY = Convert.ToDouble(Speed_y[0]);
+            double image1speedY = Convert.ToDouble(Speed_y[0]);
             //Getting Top property of the image 1 grid stack with respect to canvas
-            long BluejetPositionY = Convert.ToInt64(BluejetStack.GetValue(Canvas.TopProperty));
+            long image1PositionY = Convert.ToInt64(Image1Stack.GetValue(Canvas.TopProperty));
 
             //if condition is checking if Image one position y is greater or equal to 355
-            if (BluejetPositionY >= 355)
+            if (image1PositionY >= 355)
             {
                 //setting image one direction Y to up
-                Bluejetdirectiony = "up";
+                Image1directionY = "up";
             }
 
             //if condition is checking if Image one Y direction is up
-            if (Bluejetdirectiony.Contains("up"))
+            if (Image1directionY.Contains("up"))
             {
                 //Maving Image one on y axis upwards by subtracting image1speedX
-                Canvas.SetTop(BluejetStack, BluejetPositionY - BluejetspeedY);
+                Canvas.SetTop(Image1Stack, image1PositionY - image1speedY);
             }
 
             //if condition is checking if Image one position y is less than or equal to 5
-            if (BluejetPositionY <= 5)
+            if (image1PositionY <= 5)
             {
                 //setting image one direction Y to down
-                Bluejetdirectiony = "down";
+                Image1directionY = "down";
             }
 
             //if condition is checking if Image one Y direction is down
-            if (Bluejetdirectiony.Contains("down"))
+            if (Image1directionY.Contains("down"))
             {
                 //Maving Image one on y axis downwards by adding image1speedX
-                Canvas.SetTop(BluejetStack, BluejetPositionY + BluejetspeedY);
+                Canvas.SetTop(Image1Stack, image1PositionY + image1speedY);
             }
 
 
@@ -217,7 +218,6 @@ namespace Benchmark_Assignment
             else
             {
                 // Handle the case where the loaded data is null or empty
-                // For example, you could display an error message or take appropriate action
                 MessageBox.Show("Error loading data. The file may be empty or not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows;
+﻿using System.IO;
 
 namespace Benchmark_Assignment
 {
-    public class FileManager
+    internal class FileManager
     {
-
         private const string FileName = "ImageData.txt";
 
-        public void SaveData(object data)
+        public static void SaveData(object data)
         {
             try
             {
@@ -31,7 +23,7 @@ namespace Benchmark_Assignment
 
         public string LoadData()
         {
-            string data = null;
+            string? data = null;
 
             try
             {
