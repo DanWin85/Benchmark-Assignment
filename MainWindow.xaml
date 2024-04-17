@@ -18,13 +18,13 @@
 
         <Canvas Grid.Column="0" x:Name="mainCanvas">
             <Canvas.Background>
-                <ImageBrush  ImageSource="/Benchmark Assignment;component/images/Bluesky.jpg"/>
+                <ImageBrush ImageSource="pack://application:,,,/images/Bluesky.jpg" />
             </Canvas.Background>
-            <Grid  x:Name="Image1Stack" Canvas.Left="200" Canvas.Right="120" Canvas.Bottom="30" Canvas.Top="114"  Height="100" Width="100">
+            <Grid  x:Name="Image1Stack" Canvas.Left="50"  Canvas.Top="50"  Height="100" Width="100">
                 <Image x:Name="Image1" Margin="0,10,0,0"/>
             </Grid>
-            <Grid  x:Name="Image2Stack" Canvas.Left="90" Canvas.Right="50" Canvas.Bottom="130" Canvas.Top="104"  Height="100" Width="100">
-                <Image x:Name="Image2" Margin="0,10,0,0"/>
+            <Grid  x:Name="Image2Stack" Canvas.Left="200"  Canvas.Top="200"  Height="100" Width="100">
+                <Image x:Name="Image2" Margin="0,10,0,0" />
             </Grid>
         </Canvas>
         <ListBox x:Name="ListBox"  VerticalAlignment="Top" Grid.Column="1" Width="380" Height="250" Margin="0,5,0,0"/>

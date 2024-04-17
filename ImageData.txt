@@ -1,2 +1,2 @@
-﻿fighterjet, plane, 5, 10, 200, 300
-vintageaircraft, plane, 10, 15, 200, 310
+﻿fighterjet, plane, 5, 15, 200, 35
+vintageaircraft, plane, 2.5, 10, 100, 110

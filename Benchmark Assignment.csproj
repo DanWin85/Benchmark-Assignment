@@ -28,9 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="images\BlueSky.jpg">
+    <Resource Include="images\BlueSky.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <Resource Include="images\fighterjet.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

@@ -31,7 +31,7 @@ namespace Benchmark_Assignment
 
         private string Image1directionY = "down";
 
-        private string Image2directionx = "right";
+        private string Image2directionx = "up";
 
         private string Image2directionY = "down";
         public MainWindow()
@@ -39,6 +39,8 @@ namespace Benchmark_Assignment
             InitializeComponent();
             fileManager = new FileManager();
         }
+
+        
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -49,8 +51,8 @@ namespace Benchmark_Assignment
             {
                 string[] lines = loadedData.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
-                // Declare a list to store the image information
-                List<MyClass> initialData = new List<MyClass>();
+                // Clear the existing data in Initial_data list
+                Initial_data.Clear();
 
                 // Iterate through each line
                 foreach (string line in lines)
@@ -67,8 +69,8 @@ namespace Benchmark_Assignment
                         // Create a new instance of MyClass using the trimmed values
                         MyClass imageInfo = new MyClass(trimmedValues[0], trimmedValues[1], trimmedValues[2], trimmedValues[3], trimmedValues[4], trimmedValues[5]);
 
-                        // Add the image information to the list
-                        initialData.Add(imageInfo);
+                        // Add the image information to the Initial_data list
+                        Initial_data.Add(imageInfo);
                     }
                 }
 
@@ -76,7 +78,7 @@ namespace Benchmark_Assignment
                 ListBox.Items.Clear();
 
                 // Add each image information to the ListBox
-                foreach (var imageInfo in initialData)
+                foreach (var imageInfo in Initial_data)
                 {
                     ListBox.Items.Add(imageInfo);
                 }
@@ -91,6 +93,7 @@ namespace Benchmark_Assignment
             }
         }
 
+
         public void LoadImage()
         {
             //Here a new list is created is created to save all the names of images so these can be used to load the corresponding images on the canvas
@@ -101,22 +104,25 @@ namespace Benchmark_Assignment
                 Name.Add(a.Name);
             }
 
-            //If condition is checking the name of the image so the relevant image can be loaded on the canvas.
-            if (Name.Contains("fighterjet"))
+           foreach (string imageName in Name)
             {
-                //Creating a Uri object img1. Loading the relative image pathway
-                Uri img1 = new Uri("pack://application:,,,/images/fighterjet.jpg");
-                //Making the image1 source equal to object pathway
-                Image1.Source = new BitmapImage(img1);
-                //Once loaded the custom method below will help animate the loaded object
-                ImageAnimation();
+                if (imageName == "fighterjet")
+                {
+                    //Creating a Uri object img1. Loading the relative image pathway
+                    Uri img1 = new Uri("pack://application:,,,/images/fighterjet.jpg");
+                    //Making the image1 source equal to object pathway
+                    Image1.Source = new BitmapImage(img1);
+                    //Once loaded the custom method below will help animate the loaded object
+                    ImageAnimation();
+                }
+                else if (imageName == "vintageaircraft")
+                {
+                    Uri img2 = new Uri("pack://application:,,,/images/vintageaircraft.jpg");
+                    Image2.Source = new BitmapImage(img2);
+                    ImageAnimation();
+                }
             }
-            if (Name.Contains("vintageaircraft"))
-            {
-                Uri img2 = new Uri("pack://application:,,,/images/vintageaircraft.jpg");
-                Image2.Source = new BitmapImage(img2);
-                ImageAnimation();
-            }
+          
             //try loading another image of your choice - this requires adding another image control to the XAML, adding new image to this application and its info. to the text file (like Sheep) 
             //then set the directions for image 2 like how we did in Timer_xdirection() and timer_TickTop() methods using a new set of variables (for image 2)
         }
@@ -180,7 +186,7 @@ namespace Benchmark_Assignment
             double image2speedX = Convert.ToDouble(Speed_x[0]);
 
             long image2Positionx = Convert.ToInt64(Image1Stack.GetValue(Canvas.LeftProperty));
-            if (image2Positionx >= 390)
+            if (image2Positionx >= 400)
             {
                 //setting image one direction to left
                 Image2directionx = "left";
@@ -241,7 +247,7 @@ namespace Benchmark_Assignment
             }
 
             //if condition is checking if Image one position y is less than or equal to 5
-            if (image1PositionY <= 5)
+            if (image1PositionY <= 15)
             {
                 //setting image one direction Y to down
                 Image1directionY = "down";
@@ -257,7 +263,7 @@ namespace Benchmark_Assignment
 
             long image2PositionY = Convert.ToInt64(Image1Stack.GetValue(Canvas.TopProperty));
 
-            if (image2PositionY >= 355)
+            if (image2PositionY >= 300)
             {
                 //setting image one direction Y to up
                 Image2directionY = "up";
