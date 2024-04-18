@@ -1,2 +1,5 @@
-﻿fighterjet, plane, 5, 15, 200, 35
-vintageaircraft, plane, 2.5, 10, 100, 110
+﻿fighterjet, plane, 10, 30, 150, 235
+vintageaircraft, plane, 12.5, 10, 350, 390
+Hotairballoon, Balloon, 15, 20, 200, 300
+lightaircraft, plane, 5, 15, 250, 350
+RedHelicopter, chopper, 20, 25, 120, 350

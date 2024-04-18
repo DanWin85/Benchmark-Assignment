@@ -13,6 +13,7 @@
     <None Remove="BlueSky.jpg" />
     <None Remove="ImageData.txt" />
     <None Remove="images\Bluejet.jpg" />
+    <None Remove="images\Hotairballoon.jpg" />
     <None Remove="images\lightaircraft.jpg" />
     <None Remove="images\RedHelicopter.jpg" />
     <None Remove="images\vintageaircraft.jpg" />
@@ -40,6 +41,9 @@
     <Content Include="images\RedHelicopter.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\Hotairballoon.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\vintageaircraft.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

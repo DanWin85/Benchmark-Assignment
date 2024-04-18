@@ -28,12 +28,19 @@ namespace Benchmark_Assignment
         List<MyClass> Initial_data = new List<MyClass>();
 
         private string Image1directionx = "right";
-
         private string Image1directionY = "down";
 
-        private string Image2directionx = "up";
-
+        private string Image2directionx = "right";
         private string Image2directionY = "down";
+
+        private string Image3directionx = "right";
+        private string Image3directionY = "down";
+
+        private string Image4directionx = "right";
+        private string Image4directionY = "down";
+
+        private string Image5directionx = "right";
+        private string Image5directionY = "down";
         public MainWindow()
         {
             InitializeComponent();
@@ -104,7 +111,7 @@ namespace Benchmark_Assignment
                 Name.Add(a.Name);
             }
 
-           foreach (string imageName in Name)
+            foreach (string imageName in Name)
             {
                 if (imageName == "fighterjet")
                 {
@@ -121,10 +128,26 @@ namespace Benchmark_Assignment
                     Image2.Source = new BitmapImage(img2);
                     ImageAnimation();
                 }
+                else if (imageName == "Hotairballoon")
+                {
+                    Uri img3 = new Uri("pack://application:,,,/images/Hotairballoon.jpg");
+                    Image3.Source = new BitmapImage(img3);
+                    ImageAnimation();
+                }
+                else if (imageName == "lightaircraft")
+                {
+                    Uri img4 = new Uri("pack://application:,,,/images/lightaircraft.jpg");
+                    Image4.Source = new BitmapImage(img4);
+                    ImageAnimation();
+                }
+                else if (imageName == "RedHelicopter")
+                {
+                    Uri img5 = new Uri("pack://application:,,,/images/RedHelicopter.jpg");
+                    Image5.Source = new BitmapImage(img5);
+                    ImageAnimation();
+                }
+
             }
-          
-            //try loading another image of your choice - this requires adding another image control to the XAML, adding new image to this application and its info. to the text file (like Sheep) 
-            //then set the directions for image 2 like how we did in Timer_xdirection() and timer_TickTop() methods using a new set of variables (for image 2)
         }
 
         public void ImageAnimation()
@@ -134,7 +157,7 @@ namespace Benchmark_Assignment
             // calling the event handler to move the image x direction(Left or Right)
             timer.Tick += new EventHandler(Timer_xdirection);
             // Seting interval for dispatch timer Animation will repeat every 2 milliseconds
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 2);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
             //Starting dispatch timer.
             timer.Start();
 
@@ -183,33 +206,114 @@ namespace Benchmark_Assignment
                 Canvas.SetLeft(Image1Stack, image1Positionx + image1speedX);
             }
 
-            double image2speedX = Convert.ToDouble(Speed_x[0]);
-
-            long image2Positionx = Convert.ToInt64(Image1Stack.GetValue(Canvas.LeftProperty));
+            double image2speedX = Convert.ToDouble(Speed_x[1]);
+            long image2Positionx = Convert.ToInt64(Image2Stack.GetValue(Canvas.LeftProperty));
             if (image2Positionx >= 400)
             {
                 //setting image one direction to left
-                Image2directionx = "left";
+                Image2directionx = "right";
             }
             //if condition checking if Image one direction is left
-            if (Image2directionx.Contains("left"))
+            if (Image2directionx.Contains("right"))
             {
                 //Maving Image one on x axis to the left by subtracting image1speedX
                 Canvas.SetLeft(Image2Stack, image2Positionx - image2speedX);
             }
 
             //if condition checking if Image one position x is less then or equal to 5
-            if (image2Positionx <= 5)
+            if (image2Positionx <= 10)
             {
                 //setting image one direction X to right
-                Image2directionx = "right";
+                Image2directionx = "left";
             }
             //if condition checking if Image one direction is right
-            if (Image2directionx.Contains("right"))
+            if (Image2directionx.Contains("left"))
             {
                 //Maving Image one on x axis to the right by adding image1speedX
                 Canvas.SetLeft(Image2Stack, image2Positionx + image2speedX);
             }
+
+            double image3speedX = Convert.ToDouble(Speed_x[2]);
+            long image3Positionx = Convert.ToInt64(Image3Stack.GetValue(Canvas.LeftProperty));
+            if (image3Positionx >= 390)
+            {
+                //setting image one direction to left
+                Image3directionx = "right";
+            }
+            //if condition checking if Image one direction is left
+            if (Image3directionx.Contains("right"))
+            {
+                //Maving Image one on x axis to the left by subtracting image1speedX
+                Canvas.SetLeft(Image3Stack, image3Positionx - image3speedX);
+            }
+
+            //if condition checking if Image one position x is less then or equal to 5
+            if (image3Positionx <= 10)
+            {
+                //setting image one direction X to right
+                Image3directionx = "left";
+            }
+            //if condition checking if Image one direction is right
+            if (Image3directionx.Contains("left"))
+            {
+                //Maving Image one on x axis to the right by adding image1speedX
+                Canvas.SetLeft(Image3Stack, image3Positionx + image3speedX);
+            }
+
+            double image4speedX = Convert.ToDouble(Speed_x[3]);
+            long image4Positionx = Convert.ToInt64(Image4Stack.GetValue(Canvas.LeftProperty));
+            if (image4Positionx >= 390)
+            {
+                //setting image one direction to left
+                Image4directionx = "right";
+            }
+            //if condition checking if Image one direction is left
+            if (Image4directionx.Contains("right"))
+            {
+                //Maving Image one on x axis to the left by subtracting image1speedX
+                Canvas.SetLeft(Image4Stack, image4Positionx - image4speedX);
+            }
+
+            //if condition checking if Image one position x is less then or equal to 5
+            if (image4Positionx <= 10)
+            {
+                //setting image one direction X to right
+                Image4directionx = "left";
+            }
+            //if condition checking if Image one direction is right
+            if (Image4directionx.Contains("left"))
+            {
+                //Maving Image one on x axis to the right by adding image1speedX
+                Canvas.SetLeft(Image4Stack, image4Positionx + image4speedX);
+            }
+
+            double image5speedX = Convert.ToDouble(Speed_x[4]);
+            long image5Positionx = Convert.ToInt64(Image5Stack.GetValue(Canvas.LeftProperty));
+            if (image5Positionx >= 390)
+            {
+                //setting image one direction to left
+                Image5directionx = "left";
+            }
+            //if condition checking if Image one direction is left
+            if (Image5directionx.Contains("left"))
+            {
+                //Maving Image one on x axis to the left by subtracting image1speedX
+                Canvas.SetLeft(Image5Stack, image5Positionx - image5speedX);
+            }
+
+            //if condition checking if Image one position x is less then or equal to 5
+            if (image5Positionx <= 5)
+            {
+                //setting image one direction X to right
+                Image5directionx = "right";
+            }
+            //if condition checking if Image one direction is right
+            if (Image5directionx.Contains("right"))
+            {
+                //Maving Image one on x axis to the right by adding image1speedX
+                Canvas.SetLeft(Image5Stack, image5Positionx + image5speedX);
+            }
+
         }
 
         //Timer Method2
@@ -259,36 +363,131 @@ namespace Benchmark_Assignment
                 //Maving Image one on y axis downwards by adding image1speedX
                 Canvas.SetTop(Image1Stack, image1PositionY + image1speedY);
             }
-            double image2speedY = Convert.ToDouble(Speed_y[0]);
+            double image2speedY = Convert.ToDouble(Speed_y[1]);
 
-            long image2PositionY = Convert.ToInt64(Image1Stack.GetValue(Canvas.TopProperty));
+            long image2PositionY = Convert.ToInt64(Image2Stack.GetValue(Canvas.TopProperty));
 
-            if (image2PositionY >= 300)
+            if (image2PositionY >= 355)
             {
                 //setting image one direction Y to up
-                Image2directionY = "up";
+                Image2directionY = "down";
             }
 
             //if condition is checking if Image one Y direction is up
-            if (Image2directionY.Contains("up"))
+            if (Image2directionY.Contains("down"))
             {
                 //Maving Image one on y axis upwards by subtracting image1speedX
                 Canvas.SetTop(Image2Stack, image2PositionY - image2speedY);
             }
 
             //if condition is checking if Image one position y is less than or equal to 5
-            if (image2PositionY <= 5)
+            if (image2PositionY <= 50)
             {
                 //setting image one direction Y to down
-                Image2directionY = "down";
+                Image2directionY = "up";
             }
 
             //if condition is checking if Image one Y direction is down
-            if (Image2directionY.Contains("down"))
+            if (Image2directionY.Contains("up"))
             {
                 //Maving Image one on y axis downwards by adding image1speedX
                 Canvas.SetTop(Image2Stack, image2PositionY + image2speedY);
             }
+
+            double image3speedY = Convert.ToDouble(Speed_y[2]);
+
+            long image3PositionY = Convert.ToInt64(Image3Stack.GetValue(Canvas.TopProperty));
+
+            if (image3PositionY >= 355)
+            {
+                //setting image one direction Y to up
+                Image3directionY = "down";
+            }
+
+            //if condition is checking if Image one Y direction is up
+            if (Image3directionY.Contains("down"))
+            {
+                //Maving Image one on y axis upwards by subtracting image1speedX
+                Canvas.SetTop(Image3Stack, image3PositionY - image3speedY);
+            }
+
+            //if condition is checking if Image one position y is less than or equal to 5
+            if (image3PositionY <= 50)
+            {
+                //setting image one direction Y to down
+                Image3directionY = "up";
+            }
+
+            //if condition is checking if Image one Y direction is down
+            if (Image3directionY.Contains("up"))
+            {
+                //Maving Image one on y axis downwards by adding image1speedX
+                Canvas.SetTop(Image3Stack, image3PositionY + image3speedY);
+            }
+
+            double image4speedY = Convert.ToDouble(Speed_y[3]);
+            long image4PositionY = Convert.ToInt64(Image4Stack.GetValue(Canvas.TopProperty));
+            if (image4PositionY >= 355)
+            {
+                //setting image one direction Y to up
+                Image4directionY = "up";
+            }
+
+            //if condition is checking if Image one Y direction is up
+            if (Image4directionY.Contains("up"))
+            {
+                //Maving Image one on y axis upwards by subtracting image1speedX
+                Canvas.SetTop(Image4Stack, image4PositionY - image4speedY);
+            }
+
+            //if condition is checking if Image one position y is less than or equal to 5
+            if (image4PositionY <= 5)
+            {
+                //setting image one direction Y to down
+                Image4directionY = "down";
+            }
+
+            //if condition is checking if Image one Y direction is down
+            if (Image4directionY.Contains("down"))
+            {
+                //Maving Image one on y axis downwards by adding image5speedX
+                Canvas.SetTop(Image4Stack, image4PositionY + image4speedY);
+            }
+
+            double image5speedY = Convert.ToDouble(Speed_y[4]);
+            long image5PositionY = Convert.ToInt64(Image5Stack.GetValue(Canvas.TopProperty));
+            if (image5PositionY >= 355)
+            {
+                //setting image one direction Y to up
+                Image5directionY = "up";
+            }
+
+            //if condition is checking if Image one Y direction is up
+            if (Image5directionY.Contains("up"))
+            {
+                //Maving Image one on y axis upwards by subtracting image1speedX
+                Canvas.SetTop(Image5Stack, image5PositionY - image5speedY);
+            }
+
+            //if condition is checking if Image one position y is less than or equal to 5
+            if (image5PositionY <= 5)
+            {
+                //setting image one direction Y to down
+                Image5directionY = "down";
+            }
+
+            //if condition is checking if Image one Y direction is down
+            if (Image5directionY.Contains("down"))
+            {
+                //Maving Image one on y axis downwards by adding image1speedX
+                Canvas.SetTop(Image5Stack, image5PositionY + image5speedY);
+            }
+
+        }
+
+        private void Sort_By_A-ZButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
