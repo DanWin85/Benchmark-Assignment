@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using static System.Net.WebRequestMethods;
 
 namespace Benchmark_Assignment
 {
@@ -23,6 +24,8 @@ namespace Benchmark_Assignment
     public partial class MainWindow : Window
     {
         private FileManager? fileManager;
+        private Filter Filter;
+        
 
         DispatcherTimer timer = new DispatcherTimer();
         List<MyClass> Initial_data = new List<MyClass>();
@@ -49,7 +52,7 @@ namespace Benchmark_Assignment
 
         
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LoadInitialDataButton_Click(object sender, RoutedEventArgs e)
         {
             string loadedData = fileManager.LoadData();
 
@@ -485,9 +488,30 @@ namespace Benchmark_Assignment
 
         }
 
-        private void Sort_By_A-ZButton_Click(object sender, RoutedEventArgs e)
+        private void SortByAZButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Filter != null)
+            {
+                List<MyClass> sortedData = Filter.SortAscending(Initial_data);
+                ListBox.Items.Clear();
+                foreach (var item in sortedData)
+                {
+                    ListBox.Items.Add(item);
+                }
+            }
+        }
 
+        private void SortByZAButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Filter != null)
+            {
+                List<MyClass> sortedData = Filter.SortDescending(Initial_data);
+                ListBox.Items.Clear();
+                foreach (var item in sortedData)
+                {
+                    ListBox.Items.Add(item);
+                }
+            }
         }
     }
 }

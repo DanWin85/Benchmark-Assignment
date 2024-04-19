@@ -38,8 +38,9 @@
         </Canvas>
         <ListBox x:Name="ListBox"  VerticalAlignment="Top" Grid.Column="1" Width="380" Height="250" Margin="0,5,0,0"/>
         <StackPanel Orientation="Horizontal" Grid.Column ="1" Margin="0,5,5,0" HorizontalAlignment="Center">
-            <Button Content="Load initial data" Width="100" Height="50" Click="Button_Click" ></Button>
-            <Button Content="Sort By A-Z" Width="100" Height="50" Click="Sort_By_A-ZButton_Click" ></Button>
+            <Button Content="Load initial data" Width="100" Height="50" Click="LoadInitialDataButton_Click" ></Button>
+            <Button Content="Sort By A-Z" Width="100" Height="50" Click="SortByAZButton_Click" ></Button>
+            <Button Content="Sort By Z-A" Width="100" Height="50" Click="SortByZAButton_Click" ></Button>
         </StackPanel>
     </Grid>
 </Window>
