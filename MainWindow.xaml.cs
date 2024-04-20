@@ -48,6 +48,8 @@ namespace Benchmark_Assignment
         {
             InitializeComponent();
             fileManager = new FileManager();
+            Filter = new Filter(ListBox.Items.Cast<MyClass>().ToList());
+           // ListBox.ItemsSource = Filter.GetData();
         }
 
         
@@ -63,6 +65,9 @@ namespace Benchmark_Assignment
 
                 // Clear the existing data in Initial_data list
                 Initial_data.Clear();
+
+                // Clear all animations from the Canvas
+                //mainCanvas.Children.Clear();
 
                 // Iterate through each line
                 foreach (string line in lines)
@@ -85,7 +90,7 @@ namespace Benchmark_Assignment
                 }
 
                 // Clear the ListBox items
-                ListBox.Items.Clear();
+              ListBox.Items.Clear();
 
                 // Add each image information to the ListBox
                 foreach (var imageInfo in Initial_data)
@@ -490,28 +495,96 @@ namespace Benchmark_Assignment
 
         private void SortByAZButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Filter != null)
-            {
-                List<MyClass> sortedData = Filter.SortAscending(Initial_data);
-                ListBox.Items.Clear();
-                foreach (var item in sortedData)
-                {
-                    ListBox.Items.Add(item);
-                }
-            }
+            Filter.SortAscending();
+            ListBox.Items.Refresh();
         }
 
         private void SortByZAButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Filter != null)
+            Filter.SortDescending();
+            ListBox.Items.Refresh();
+        }
+
+        private void RemoveSelectedButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Check if an item is selected in the ListBox
+            if (ListBox.SelectedItem != null)
             {
-                List<MyClass> sortedData = Filter.SortDescending(Initial_data);
-                ListBox.Items.Clear();
-                foreach (var item in sortedData)
-                {
-                    ListBox.Items.Add(item);
-                }
+                // Remove the selected item from the ListBox
+                MyClass selectedItem = (MyClass)ListBox.SelectedItem;
+                ListBox.Items.Remove(selectedItem);
+
+                // Remove the corresponding animated image from the Canvas
+                RemoveAnimatedImage(selectedItem.Name);
             }
+            else
+            {
+                // Display a message if no item is selected
+                MessageBox.Show("Please select an item to remove.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void RemoveAnimatedImage(string imageName)
+        {
+            // Determine which animated image corresponds to the given image name and remove it from the Canvas
+            if (imageName == "fighterjet")
+            {
+                // Remove the animated image for the fighter jet
+                mainCanvas.Children.Remove(Image1Stack);
+            }
+            else if (imageName == "vintageaircraft")
+            {
+                // Remove the animated image for the vintage aircraft
+                mainCanvas.Children.Remove(Image2Stack);
+            }  
+            else if(imageName == "Hotairballoon")
+            { 
+                // Remove the animated image for the Hot Air balloon
+                mainCanvas.Children.Remove(Image3Stack);
+            }
+            else if (imageName == "lightaircraft")
+            {
+                // Remove the animated image for the light Aircraft
+                mainCanvas.Children.Remove(Image4Stack);
+            }
+            else if (imageName == "RedHelicopter")
+            {
+                // Remove the animated image for the Red helicopter
+                mainCanvas.Children.Remove(Image5Stack);
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void SearchByTypeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ShowStatusButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveCurrentButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LoadPreviousSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClearAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Clear the listbox
+            ListBox.Items.Clear();
+            // Clear the canvas
+            mainCanvas.Children.Clear();
         }
     }
 }

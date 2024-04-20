@@ -2,4 +2,4 @@
 vintageaircraft, plane, 4.5, 3.6, 350, 135
 Hotairballoon, Balloon, 2.0, 3.6, 256, 126
 lightaircraft, plane, 1.2, 1.0, 385, 203
-RedHelicopter, chopper, 2.0, 4.8, 395, 380
+RedHelicopter, chopper, 2.0, 4.8, 695, 580

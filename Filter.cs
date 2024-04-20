@@ -18,15 +18,20 @@ namespace Benchmark_Assignment
         }
 
         // Method to sort data in ascending order based on the name
-        public List<MyClass> SortAscending(List<MyClass> dataToSort)
+        public void SortAscending()
         {
-            return dataToSort.OrderBy(item => item.Name).ToList();
+            data = data.OrderBy(item => item.Name).ToList();
         }
 
         // Method to sort data in descending order based on the name
-        public List<MyClass> SortDescending(List<MyClass> dataToSort)
+        public void SortDescending()
         {
-            return dataToSort.OrderByDescending(item => item.Name).ToList();
+            data = data.OrderByDescending(item => item.Name).ToList(); ;
+        }
+
+        public List<MyClass> GetData()
+        {
+            return data;
         }
 
     }

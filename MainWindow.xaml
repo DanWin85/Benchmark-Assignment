@@ -8,11 +8,12 @@
         Title="MainWindow" Height="650" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="400"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
+            
         </Grid.RowDefinitions>
         <Canvas Grid.Column="1" Background="#393637"></Canvas>
 
@@ -36,11 +37,37 @@
                 <Image x:Name="Image5" Margin="0,10,0,0" />
             </Grid>
         </Canvas>
-        <ListBox x:Name="ListBox"  VerticalAlignment="Top" Grid.Column="1" Width="380" Height="250" Margin="0,5,0,0"/>
-        <StackPanel Orientation="Horizontal" Grid.Column ="1" Margin="0,5,5,0" HorizontalAlignment="Center">
-            <Button Content="Load initial data" Width="100" Height="50" Click="LoadInitialDataButton_Click" ></Button>
-            <Button Content="Sort By A-Z" Width="100" Height="50" Click="SortByAZButton_Click" ></Button>
-            <Button Content="Sort By Z-A" Width="100" Height="50" Click="SortByZAButton_Click" ></Button>
+        
+        <ListBox x:Name="ListBox"  VerticalAlignment="Top" Grid.Column="1" Width="390" Height="250" Margin="0,5,0,0"/>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,-60,0,0">
+            <Label Content="Enter Aircraft Type for Search:" VerticalAlignment="Center"  Foreground="White" />
+            <TextBox Width="228" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" />
         </StackPanel>
+
+        <Grid Grid.Column="1" Margin="0,325,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Load initial data" Width="125" Height="55" Click="LoadInitialDataButton_Click" Grid.Row="1" Grid.Column="0" Margin="5" />
+            <Button Content="Sort By A-Z" Width="125" Height="55" Click="SortByAZButton_Click" Grid.Row="2" Grid.Column="1" Margin="5" />
+            <Button Content="Sort By Z-A" Width="125" Height="55" Click="SortByZAButton_Click" Grid.Row="1" Grid.Column="1" Margin="5" />
+
+            <Button Content="Remove Selected Object" Width="125" Height="55" Click="RemoveSelectedButton_Click" Grid.Row="0" Grid.Column="1" Margin="5" />
+            <Button Content="Search by Type" Width="125" Height="55" Click="SearchByTypeButton_Click" Grid.Row="0" Grid.Column="2" Margin="5" />
+            <Button Content="Show Status" Width="125" Height="55"  Click="ShowStatusButton_Click" Grid.Row="0" Grid.Column="0" Margin="5" />
+
+            <Button Content="Save Current List" Width="125" Height="55" Click="SaveCurrentButton_Click" Grid.Row="1" Grid.Column="2" Margin="5" />
+            <Button Content="Load Previous Saving" Width="125" Height="55" Click="LoadPreviousSaveButton_Click" Grid.Row="2" Grid.Column="0" Margin="5" />
+            <Button Content="Clear All" Width="125" Height="55" Click="ClearAllButton_Click" Grid.Row="2" Grid.Column="2" Margin="5" />
+        </Grid>
     </Grid>
 </Window>
