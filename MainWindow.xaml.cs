@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Threading;
-using static System.Net.WebRequestMethods;
 
 namespace Benchmark_Assignment
 {
@@ -24,11 +15,12 @@ namespace Benchmark_Assignment
     public partial class MainWindow : Window
     {
         private FileManager? fileManager;
-        private Filter Filter;
-        
-
+        private Filter Filter { get; set; }
+        ObservableCollection<MyClass> Initial_data = new ObservableCollection<MyClass>();
+        private List<string> Speed_x = new List<string>();
+        private List<string> Speed_y = new List<string>();
         DispatcherTimer timer = new DispatcherTimer();
-        List<MyClass> Initial_data = new List<MyClass>();
+        //List<MyClass> Initial_data = new List<MyClass>();
 
         private string Image1directionx = "right";
         private string Image1directionY = "down";
@@ -47,12 +39,22 @@ namespace Benchmark_Assignment
         public MainWindow()
         {
             InitializeComponent();
+
             fileManager = new FileManager();
-            Filter = new Filter(ListBox.Items.Cast<MyClass>().ToList());
-           // ListBox.ItemsSource = Filter.GetData();
+
+            Filter = new Filter(Initial_data);
+
+            Filter.PropertyChanged += Filter_PropertyChanged;
+
+            CollectionViewSource viewSource = new CollectionViewSource();
+            viewSource.Source = Filter.InitialData;
+            ListBox.ItemsSource = viewSource.View;
+
         }
 
-        
+
+
+
 
         private void LoadInitialDataButton_Click(object sender, RoutedEventArgs e)
         {
@@ -65,9 +67,6 @@ namespace Benchmark_Assignment
 
                 // Clear the existing data in Initial_data list
                 Initial_data.Clear();
-
-                // Clear all animations from the Canvas
-                //mainCanvas.Children.Clear();
 
                 // Iterate through each line
                 foreach (string line in lines)
@@ -86,20 +85,22 @@ namespace Benchmark_Assignment
 
                         // Add the image information to the Initial_data list
                         Initial_data.Add(imageInfo);
+
+                    }
+                    else
+                    {
+                        // Handle the case where a line does not have the expected number of elements
+                        MessageBox.Show($"Error parsing line: {line}. The line does not have the expected number of elements.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
 
-                // Clear the ListBox items
-              ListBox.Items.Clear();
-
-                // Add each image information to the ListBox
-                foreach (var imageInfo in Initial_data)
-                {
-                    ListBox.Items.Add(imageInfo);
-                }
+                // Update the ItemsSource of ListBox to reflect changes in Initial_data
+                ListBox.ItemsSource = Initial_data;
 
                 // Call the LoadImage method
                 LoadImage();
+
+                Filter.InitialData = Initial_data;
             }
             else
             {
@@ -113,21 +114,21 @@ namespace Benchmark_Assignment
         {
             //Here a new list is created is created to save all the names of images so these can be used to load the corresponding images on the canvas
             List<string> Name = new List<string>();
+
             //we are iterating over the initial_data object list to access the names of images and add them to the new list-Name
             foreach (MyClass a in Initial_data)
             {
                 Name.Add(a.Name);
             }
 
+            // Looping through the Initial_data for the name
             foreach (string imageName in Name)
             {
                 if (imageName == "fighterjet")
                 {
                     //Creating a Uri object img1. Loading the relative image pathway
                     Uri img1 = new Uri("pack://application:,,,/images/fighterjet.jpg");
-                    //Making the image1 source equal to object pathway
                     Image1.Source = new BitmapImage(img1);
-                    //Once loaded the custom method below will help animate the loaded object
                     ImageAnimation();
                 }
                 else if (imageName == "vintageaircraft")
@@ -161,9 +162,9 @@ namespace Benchmark_Assignment
         public void ImageAnimation()
         {
             // calling the event handler to move the image y direction(Up or Down)
-            timer.Tick += new EventHandler(timer_TickTop);
-            // calling the event handler to move the image x direction(Left or Right)
             timer.Tick += new EventHandler(Timer_xdirection);
+            // calling the event handler to move the image x direction(Left or Right)
+            timer.Tick += new EventHandler(timer_TickTop);
             // Seting interval for dispatch timer Animation will repeat every 2 milliseconds
             timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
             //Starting dispatch timer.
@@ -171,23 +172,36 @@ namespace Benchmark_Assignment
 
         }
 
+        private void PopulateSpeedXList(List<string> speedXList)
+        {
+            speedXList.Clear();
+            foreach (MyClass c in Initial_data)
+            {
+                speedXList.Add(c.Speed_x.TrimStart('-'));
+            }
+        }
+
+        private void PopulateSpeedYList(List<string> speedYList)
+        {
+            speedYList.Clear();
+            foreach (MyClass c in Initial_data)
+            {
+                speedYList.Add(c.Speed_y.TrimStart('-'));
+            }
+        }
+
         void Timer_xdirection(object sender, EventArgs e)
         {
             //List containing Speed_x list
             List<string> Speed_x = new List<string>();
-            //Looping through initial data 
-            foreach (MyClass c in Initial_data)
-            {
-                //Adding Speed x cordinate to list. Also getting rid of negative values
-                Speed_x.Add(c.Speed_x.TrimStart('-'));
-            }
+            PopulateSpeedXList(Speed_x);
             //converting speed x cordinate to double varible
             double image1speedX = Convert.ToDouble(Speed_x[0]);
-           
+
 
             //Getting left property of the image grid stack with respect to canvas
             long image1Positionx = Convert.ToInt64(Image1Stack.GetValue(Canvas.LeftProperty));
-            
+
             //if condition checking if Image position x is greater or equal to 390
             if (image1Positionx >= 390)
             {
@@ -214,7 +228,7 @@ namespace Benchmark_Assignment
                 Canvas.SetLeft(Image1Stack, image1Positionx + image1speedX);
             }
 
-            double image2speedX = Convert.ToDouble(Speed_x[1]);
+            double image2speedX = Convert.ToDouble(Speed_x[0]);
             long image2Positionx = Convert.ToInt64(Image2Stack.GetValue(Canvas.LeftProperty));
             if (image2Positionx >= 400)
             {
@@ -241,7 +255,7 @@ namespace Benchmark_Assignment
                 Canvas.SetLeft(Image2Stack, image2Positionx + image2speedX);
             }
 
-            double image3speedX = Convert.ToDouble(Speed_x[2]);
+            double image3speedX = Convert.ToDouble(Speed_x[0]);
             long image3Positionx = Convert.ToInt64(Image3Stack.GetValue(Canvas.LeftProperty));
             if (image3Positionx >= 390)
             {
@@ -268,7 +282,7 @@ namespace Benchmark_Assignment
                 Canvas.SetLeft(Image3Stack, image3Positionx + image3speedX);
             }
 
-            double image4speedX = Convert.ToDouble(Speed_x[3]);
+            double image4speedX = Convert.ToDouble(Speed_x[0]);
             long image4Positionx = Convert.ToInt64(Image4Stack.GetValue(Canvas.LeftProperty));
             if (image4Positionx >= 390)
             {
@@ -295,7 +309,7 @@ namespace Benchmark_Assignment
                 Canvas.SetLeft(Image4Stack, image4Positionx + image4speedX);
             }
 
-            double image5speedX = Convert.ToDouble(Speed_x[4]);
+            double image5speedX = Convert.ToDouble(Speed_x[0]);
             long image5Positionx = Convert.ToInt64(Image5Stack.GetValue(Canvas.LeftProperty));
             if (image5Positionx >= 390)
             {
@@ -330,19 +344,14 @@ namespace Benchmark_Assignment
 
             //List containing Speed_y list
             List<string> Speed_y = new List<string>();
-            Speed_y.Clear();
-            foreach (MyClass c in Initial_data)
-            {
-                //Adding Speed y cordinate to list. Also getting rid of negative values
-                Speed_y.Add(c.Speed_y.TrimStart('-'));
-            }
+            PopulateSpeedYList(Speed_y);
 
             //converting speed y cordinate to double varible
             double image1speedY = Convert.ToDouble(Speed_y[0]);
-           
+
             //Getting Top property of the image 1 grid stack with respect to canvas
             long image1PositionY = Convert.ToInt64(Image1Stack.GetValue(Canvas.TopProperty));
-            
+
 
             //if condition is checking if Image one position y is greater or equal to 355
             if (image1PositionY >= 355)
@@ -371,7 +380,7 @@ namespace Benchmark_Assignment
                 //Maving Image one on y axis downwards by adding image1speedX
                 Canvas.SetTop(Image1Stack, image1PositionY + image1speedY);
             }
-            double image2speedY = Convert.ToDouble(Speed_y[1]);
+            double image2speedY = Convert.ToDouble(Speed_y[0]);
 
             long image2PositionY = Convert.ToInt64(Image2Stack.GetValue(Canvas.TopProperty));
 
@@ -402,7 +411,7 @@ namespace Benchmark_Assignment
                 Canvas.SetTop(Image2Stack, image2PositionY + image2speedY);
             }
 
-            double image3speedY = Convert.ToDouble(Speed_y[2]);
+            double image3speedY = Convert.ToDouble(Speed_y[0]);
 
             long image3PositionY = Convert.ToInt64(Image3Stack.GetValue(Canvas.TopProperty));
 
@@ -433,7 +442,7 @@ namespace Benchmark_Assignment
                 Canvas.SetTop(Image3Stack, image3PositionY + image3speedY);
             }
 
-            double image4speedY = Convert.ToDouble(Speed_y[3]);
+            double image4speedY = Convert.ToDouble(Speed_y[0]);
             long image4PositionY = Convert.ToInt64(Image4Stack.GetValue(Canvas.TopProperty));
             if (image4PositionY >= 355)
             {
@@ -462,7 +471,7 @@ namespace Benchmark_Assignment
                 Canvas.SetTop(Image4Stack, image4PositionY + image4speedY);
             }
 
-            double image5speedY = Convert.ToDouble(Speed_y[4]);
+            double image5speedY = Convert.ToDouble(Speed_y[0]);
             long image5PositionY = Convert.ToInt64(Image5Stack.GetValue(Canvas.TopProperty));
             if (image5PositionY >= 355)
             {
@@ -496,13 +505,19 @@ namespace Benchmark_Assignment
         private void SortByAZButton_Click(object sender, RoutedEventArgs e)
         {
             Filter.SortAscending();
-            ListBox.Items.Refresh();
         }
 
         private void SortByZAButton_Click(object sender, RoutedEventArgs e)
-        {
+        { 
             Filter.SortDescending();
-            ListBox.Items.Refresh();
+        }
+
+        private void Filter_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Filter.InitialData))
+            {
+              
+            }
         }
 
         private void RemoveSelectedButton_Click(object sender, RoutedEventArgs e)
@@ -510,12 +525,16 @@ namespace Benchmark_Assignment
             // Check if an item is selected in the ListBox
             if (ListBox.SelectedItem != null)
             {
-                // Remove the selected item from the ListBox
+                // Get the selected item
                 MyClass selectedItem = (MyClass)ListBox.SelectedItem;
-                ListBox.Items.Remove(selectedItem);
+
+                // Remove the selected item from the InitialData collection
+                Filter.InitialData.Remove(selectedItem);
 
                 // Remove the corresponding animated image from the Canvas
                 RemoveAnimatedImage(selectedItem.Name);
+                PopulateSpeedXList(Speed_x);
+                PopulateSpeedYList(Speed_y);
             }
             else
             {
@@ -554,14 +573,10 @@ namespace Benchmark_Assignment
             }
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void SearchByTypeButton_Click(object sender, RoutedEventArgs e)
         {
-
+            string keyword = TextBox.Text; // Get the keyword from the text box
+            Filter.FilterByKeyword(keyword, mainCanvas, Image1Stack, Image2Stack, Image3Stack, Image4Stack, Image5Stack); // Call the FilterByKeyword method with the keyword and UI elements
         }
 
         private void ShowStatusButton_Click(object sender, RoutedEventArgs e)
@@ -581,10 +596,13 @@ namespace Benchmark_Assignment
 
         private void ClearAllButton_Click(object sender, RoutedEventArgs e)
         {
-            //Clear the listbox
-            ListBox.Items.Clear();
+            // Clear the InitialData collection
+            Filter.InitialData.Clear();
+
             // Clear the canvas
             mainCanvas.Children.Clear();
+            PopulateSpeedXList(Speed_x);
+            PopulateSpeedYList(Speed_y);
         }
     }
 }

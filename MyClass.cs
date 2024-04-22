@@ -1,80 +1,115 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Benchmark_Assignment
 {
-     class MyClass
+    class MyClass : INotifyPropertyChanged
     {
-        string name;
+        private string _name;
+        private string _type;
+        private string _speed_x;
+        private string _speed_y;
+        private string _position_x;
+        private string _position_y;
 
-        string type;
-
-        string speed_x; 
-
-        string speed_y;
-
-        string position_x; 
-
-        string position_y;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public string Name
         {
-            get { return name; }
-
-            set { name = value; }
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public string Type
         {
-            get { return type; }
-
-            set { type = value; }
+            get { return _type; }
+            set
+            {
+                if (_type != value)
+                {
+                    _type = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public string Speed_x
         {
-            get { return speed_x; }
-
-            set { speed_x = value; }
+            get { return _speed_x; }
+            set
+            {
+                if (_speed_x != value)
+                {
+                    _speed_x = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public string Speed_y
         {
-            get { return speed_y; } 
-
-            set { speed_y = value; }
+            get { return _speed_y; }
+            set
+            {
+                if (_speed_y != value)
+                {
+                    _speed_y = value;
+                    OnPropertyChanged();
+                }
+            }
         }
-
         public string Position_x
         {
-            get { return position_x; }
-
-            set { position_x = value; }
+            get { return _position_x; }
+            set
+            {
+                if (_position_x != value)
+                {
+                    _position_x = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public string Position_y
         {
-            get { return position_y; }
-
-            set { position_y = value; }
+            get { return _position_y; }
+            set
+            {
+                if (_position_y != value)
+                {
+                    _position_y = value;
+                    OnPropertyChanged();
+                }
+            }
         }
+
 
         public MyClass(string name, string type, string speed_x, string speed_y, string position_x, string position_y)
         {
-            this.name = name;
-            this.type = type;
-            this.speed_x = speed_x;
-            this.speed_y = speed_y;
-            this.position_x = position_x;
-            this.position_y = position_y;
+            _name = name;
+            _type = type;
+            _speed_x = speed_x;
+            _speed_y = speed_y;
+            _position_x = position_x;
+            _position_y = position_y;
         }
 
         public override string ToString()
         {
-            return name + "   |    " + type + "    |     X " + speed_x + "    |    Y " + speed_y + "    |   X " + position_x + "    |    Y " + position_y;
+            return Name + "  |  " + Type + "  |  X " + Speed_x + "  |  Y " + Speed_y + "  |  X " + Position_x + "  |  Y " + Position_y;
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
