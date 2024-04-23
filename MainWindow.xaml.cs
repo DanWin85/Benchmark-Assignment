@@ -58,7 +58,7 @@ namespace Benchmark_Assignment
 
         private void LoadInitialDataButton_Click(object sender, RoutedEventArgs e)
         {
-            string loadedData = fileManager.LoadData();
+            string loadedData = fileManager.LoadInitialData();
 
             // Check if the loaded data is not null
             if (!string.IsNullOrEmpty(loadedData))
@@ -101,6 +101,8 @@ namespace Benchmark_Assignment
                 LoadImage();
 
                 Filter.InitialData = Initial_data;
+                Filter.mainCanvas = mainCanvas;
+                Filter.SetGridInstances(Image1Stack, Image2Stack, Image3Stack, Image4Stack, Image5Stack);
             }
             else
             {
@@ -195,8 +197,15 @@ namespace Benchmark_Assignment
             //List containing Speed_x list
             List<string> Speed_x = new List<string>();
             PopulateSpeedXList(Speed_x);
-            //converting speed x cordinate to double varible
-            double image1speedX = Convert.ToDouble(Speed_x[0]);
+
+            double image1speedX = 0;
+            if (Speed_x.Count > 0)
+            {
+                //converting speed x cordinate to double varible
+                 image1speedX = Convert.ToDouble(Speed_x[0]);
+            }
+            
+
 
 
             //Getting left property of the image grid stack with respect to canvas
@@ -228,7 +237,12 @@ namespace Benchmark_Assignment
                 Canvas.SetLeft(Image1Stack, image1Positionx + image1speedX);
             }
 
-            double image2speedX = Convert.ToDouble(Speed_x[0]);
+            double image2speedX = 0;
+            if (Speed_x.Count > 0)
+            {
+                image2speedX = Convert.ToDouble(Speed_x[0]);
+            }
+            
             long image2Positionx = Convert.ToInt64(Image2Stack.GetValue(Canvas.LeftProperty));
             if (image2Positionx >= 400)
             {
@@ -254,8 +268,13 @@ namespace Benchmark_Assignment
                 //Maving Image one on x axis to the right by adding image1speedX
                 Canvas.SetLeft(Image2Stack, image2Positionx + image2speedX);
             }
+            
+            double image3speedX = 0;
+            if (Speed_x.Count > 0)
+            {
+                image3speedX = Convert.ToDouble(Speed_x[0]);
+            }
 
-            double image3speedX = Convert.ToDouble(Speed_x[0]);
             long image3Positionx = Convert.ToInt64(Image3Stack.GetValue(Canvas.LeftProperty));
             if (image3Positionx >= 390)
             {
@@ -282,7 +301,12 @@ namespace Benchmark_Assignment
                 Canvas.SetLeft(Image3Stack, image3Positionx + image3speedX);
             }
 
-            double image4speedX = Convert.ToDouble(Speed_x[0]);
+            double image4speedX = 0;
+            if (Speed_x.Count > 0)
+            {
+                image4speedX = Convert.ToDouble(Speed_x[0]);
+            }
+            
             long image4Positionx = Convert.ToInt64(Image4Stack.GetValue(Canvas.LeftProperty));
             if (image4Positionx >= 390)
             {
@@ -309,7 +333,12 @@ namespace Benchmark_Assignment
                 Canvas.SetLeft(Image4Stack, image4Positionx + image4speedX);
             }
 
-            double image5speedX = Convert.ToDouble(Speed_x[0]);
+            double image5speedX = 0;
+            if (Speed_x.Count > 0)
+            {
+                image5speedX = Convert.ToDouble(Speed_x[0]);
+            }
+            
             long image5Positionx = Convert.ToInt64(Image5Stack.GetValue(Canvas.LeftProperty));
             if (image5Positionx >= 390)
             {
@@ -335,7 +364,29 @@ namespace Benchmark_Assignment
                 //Maving Image one on x axis to the right by adding image1speedX
                 Canvas.SetLeft(Image5Stack, image5Positionx + image5speedX);
             }
-
+            foreach (MyClass item in Filter.InitialData)
+            {
+                if (item.Name == "fighterjet")
+                {
+                    item.CurrentPositionX = image1Positionx;
+                }
+                else if (item.Name == "vintageaircraft")
+                {
+                    item.CurrentPositionX = image2Positionx;
+                }
+                else if (item.Name == "Hotairballoon")
+                {
+                    item.CurrentPositionX = image3Positionx;
+                }
+                else if (item.Name == "lightaircraft")
+                {
+                    item.CurrentPositionX = image4Positionx;
+                }
+                else if (item.Name == "RedHelicopter")
+                {
+                    item.CurrentPositionX = image5Positionx;
+                }
+            }
         }
 
         //Timer Method2
@@ -345,9 +396,13 @@ namespace Benchmark_Assignment
             //List containing Speed_y list
             List<string> Speed_y = new List<string>();
             PopulateSpeedYList(Speed_y);
-
-            //converting speed y cordinate to double varible
-            double image1speedY = Convert.ToDouble(Speed_y[0]);
+            double image1speedY = 0;
+            if(Speed_y.Count > 0)
+            {
+                //converting speed y cordinate to double varible
+                image1speedY = Convert.ToDouble(Speed_y[0]);
+            }
+            
 
             //Getting Top property of the image 1 grid stack with respect to canvas
             long image1PositionY = Convert.ToInt64(Image1Stack.GetValue(Canvas.TopProperty));
@@ -380,8 +435,14 @@ namespace Benchmark_Assignment
                 //Maving Image one on y axis downwards by adding image1speedX
                 Canvas.SetTop(Image1Stack, image1PositionY + image1speedY);
             }
-            double image2speedY = Convert.ToDouble(Speed_y[0]);
 
+            double image2speedY = 0;
+            if (Speed_y.Count > 0)
+            {
+                //converting speed y cordinate to double varible
+                image2speedY = Convert.ToDouble(Speed_y[0]);
+            }
+           
             long image2PositionY = Convert.ToInt64(Image2Stack.GetValue(Canvas.TopProperty));
 
             if (image2PositionY >= 355)
@@ -411,7 +472,12 @@ namespace Benchmark_Assignment
                 Canvas.SetTop(Image2Stack, image2PositionY + image2speedY);
             }
 
-            double image3speedY = Convert.ToDouble(Speed_y[0]);
+            double image3speedY = 0;
+            if (Speed_y.Count > 0)
+            {
+                //converting speed y cordinate to double varible
+                image3speedY = Convert.ToDouble(Speed_y[0]);
+            }
 
             long image3PositionY = Convert.ToInt64(Image3Stack.GetValue(Canvas.TopProperty));
 
@@ -442,7 +508,13 @@ namespace Benchmark_Assignment
                 Canvas.SetTop(Image3Stack, image3PositionY + image3speedY);
             }
 
-            double image4speedY = Convert.ToDouble(Speed_y[0]);
+            double image4speedY = 0;
+            if (Speed_y.Count > 0)
+            {
+                //converting speed y cordinate to double varible
+                image4speedY = Convert.ToDouble(Speed_y[0]);
+            }
+
             long image4PositionY = Convert.ToInt64(Image4Stack.GetValue(Canvas.TopProperty));
             if (image4PositionY >= 355)
             {
@@ -471,7 +543,13 @@ namespace Benchmark_Assignment
                 Canvas.SetTop(Image4Stack, image4PositionY + image4speedY);
             }
 
-            double image5speedY = Convert.ToDouble(Speed_y[0]);
+            double image5speedY = 0;
+            if (Speed_y.Count > 0)
+            {
+                //converting speed y cordinate to double varible
+                image5speedY = Convert.ToDouble(Speed_y[0]);
+            }
+
             long image5PositionY = Convert.ToInt64(Image5Stack.GetValue(Canvas.TopProperty));
             if (image5PositionY >= 355)
             {
@@ -499,7 +577,29 @@ namespace Benchmark_Assignment
                 //Maving Image one on y axis downwards by adding image1speedX
                 Canvas.SetTop(Image5Stack, image5PositionY + image5speedY);
             }
-
+            foreach (MyClass item in Filter.InitialData)
+            {
+                if (item.Name == "fighterjet")
+                {
+                    item.CurrentPositionY = image1PositionY;
+                }
+                else if (item.Name == "vintageaircraft")
+                {
+                    item.CurrentPositionY = image2PositionY;
+                }
+                else if (item.Name == "Hotairballoon")
+                {
+                    item.CurrentPositionY = image3PositionY;
+                }
+                else if (item.Name == "lightaircraft")
+                {
+                    item.CurrentPositionY = image4PositionY;
+                }
+                else if (item.Name == "RedHelicopter")
+                {
+                    item.CurrentPositionY = image5PositionY;
+                }
+            }
         }
 
         private void SortByAZButton_Click(object sender, RoutedEventArgs e)
@@ -578,20 +678,47 @@ namespace Benchmark_Assignment
             string keyword = TextBox.Text; // Get the keyword from the text box
             Filter.FilterByKeyword(keyword, mainCanvas, Image1Stack, Image2Stack, Image3Stack, Image4Stack, Image5Stack); // Call the FilterByKeyword method with the keyword and UI elements
         }
-
+        
         private void ShowStatusButton_Click(object sender, RoutedEventArgs e)
         {
+            ObservableCollection<MyClass> currentData = new ObservableCollection<MyClass>();
 
+            // Iterate through the InitialData collection
+            foreach (MyClass item in Filter.InitialData)
+            {
+                // Create a new MyClass instance with the updated values
+                MyClass updatedItem = new MyClass(
+                    item.Name,
+                    item.Type,
+                    item.Speed_x,
+                    item.Speed_y,
+                    item.CurrentPositionX.ToString(),
+                    item.CurrentPositionY.ToString()
+                );
+
+                // Add the updated item to the currentData collection
+                currentData.Add(updatedItem);
+            }
+            // Update the itemsSource of the ListBox with the current data 
+            ListBox.ItemsSource = currentData;
         }
-
+        
         private void SaveCurrentButton_Click(object sender, RoutedEventArgs e)
         {
+            // Get the current data from the ListBox
+            ObservableCollection<MyClass> currentData = (ObservableCollection<MyClass>)ListBox.ItemsSource;
 
+            // Save the current data to the file
+            FileManager.SaveCurrentData(currentData);
         }
 
         private void LoadPreviousSaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // Load the saved data from the file
+            ObservableCollection<MyClass> savedData = FileManager.LoadSavedData();
 
+            // Update the StatusListBox with the loaded data
+            ListBox.ItemsSource = savedData;
         }
 
         private void ClearAllButton_Click(object sender, RoutedEventArgs e)

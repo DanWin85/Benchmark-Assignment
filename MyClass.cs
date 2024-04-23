@@ -13,6 +13,34 @@ namespace Benchmark_Assignment
         private string _position_y;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private long _currentPositionX;
+        private long _currentPositionY;
+
+        public long CurrentPositionX
+        {
+            get { return _currentPositionX; }
+            set
+            {
+                if (_currentPositionX != value)
+                {
+                    _currentPositionX = value;
+                    OnPropertyChanged(nameof(CurrentPositionX));
+                }
+            }
+        }
+
+        public long CurrentPositionY
+        {
+            get { return _currentPositionY; }
+            set
+            {
+                if (_currentPositionY != value)
+                {
+                    _currentPositionY = value;
+                    OnPropertyChanged(nameof(CurrentPositionY));
+                }
+            }
+        }
 
         public string Name
         {

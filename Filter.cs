@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Benchmark_Assignment
@@ -11,6 +12,11 @@ namespace Benchmark_Assignment
 
         public event PropertyChangedEventHandler PropertyChanged;
         public Canvas mainCanvas { get; set; }
+        public Grid Image1Stack { get; set; }
+        public Grid Image2Stack { get; set; }
+        public Grid Image3Stack { get; set; }
+        public Grid Image4Stack { get; set; }
+        public Grid Image5Stack { get; set; }
         public Filter(ObservableCollection<MyClass> initialData)
         {
             _initialData = initialData;
@@ -109,6 +115,100 @@ namespace Benchmark_Assignment
                 InitialData.Add(item);
             }
         }
+        public void SetGridInstances(Grid image1Stack, Grid image2Stack, Grid image3Stack, Grid image4Stack, Grid image5Stack)
+        {
+            Image1Stack = image1Stack;
+            Image2Stack = image2Stack;
+            Image3Stack = image3Stack;
+            Image4Stack = image4Stack;
+            Image5Stack = image5Stack;
+        }
+        public long GetGridLeft(string imageName)
+        {
+            long currentPositionX = 0;
 
+            if (mainCanvas != null && mainCanvas.Children.Count > 0)
+            {
+                switch (imageName)
+                {
+                    case "fighterjet":
+                        currentPositionX = Convert.ToInt64(Image1Stack.GetValue(Canvas.LeftProperty));
+                        break;
+                    case "vintageaircraft":
+                        currentPositionX = Convert.ToInt64(Image2Stack.GetValue(Canvas.LeftProperty));
+                        break;
+                    case "Hotairballoon":
+                        currentPositionX = Convert.ToInt64(Image3Stack.GetValue(Canvas.LeftProperty));
+                        break;
+                    case "lightaircraft":
+                        currentPositionX = Convert.ToInt64(Image4Stack.GetValue(Canvas.LeftProperty));
+                        break;
+                    case "RedHelicopter":
+                        currentPositionX = Convert.ToInt64(Image5Stack.GetValue(Canvas.LeftProperty));
+                        break;
+                }
+            }
+         
+
+            return currentPositionX;
+        }
+
+        
+        public long GetGridTop (string imageName)
+        {
+            long currentPositionY = 0;
+            if (mainCanvas != null && mainCanvas.Children.Count > 0)
+            {
+                switch (imageName)
+                {
+                    case "fighterjet":
+                        currentPositionY = Convert.ToInt64(Image1Stack.GetValue(Canvas.TopProperty));
+                        break;
+                    case "vintageaircraft":
+                        currentPositionY = Convert.ToInt64(Image2Stack.GetValue(Canvas.TopProperty));
+                        break;
+                    case "Hotairballoon":
+                        currentPositionY = Convert.ToInt64(Image3Stack.GetValue(Canvas.TopProperty));
+                        break;
+                    case "lightaircraft":
+                        currentPositionY = Convert.ToInt64(Image4Stack.GetValue(Canvas.TopProperty));
+                        break;
+                    case "RedHelicopter":
+                        currentPositionY = Convert.ToInt64(Image5Stack.GetValue(Canvas.TopProperty));
+                        break;
+                }
+            }
+            return currentPositionY;
+        }
+        
+        public double GetSpeed_x(string imageName)
+        {
+            double currentSpeedX = 0;
+            foreach (MyClass item in InitialData)
+            {
+                if (item.Name == imageName)
+                {
+                    currentSpeedX = double.Parse(item.Speed_x.TrimStart(','));
+                    break;
+                }
+            }
+            return currentSpeedX;
+        }
+
+        public double GetSpeed_y(string imageName)
+        {
+            double currentSpeedY = 0;
+
+            foreach (MyClass item in InitialData)
+            {
+                if (item.Name == imageName)
+                {
+                    currentSpeedY = double.Parse(item.Speed_y.TrimStart(','));
+                    break;
+                }
+            }
+            return currentSpeedY;
+        }
+        
     }
 }
