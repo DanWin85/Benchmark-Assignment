@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <RootNamespace>Benchmark_Assignment</RootNamespace>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -41,6 +41,7 @@
     <Content Include="images\RedHelicopter.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <PackageReference Include="Moq" Version="4.20.70" />
     <Resource Include="images\Hotairballoon.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

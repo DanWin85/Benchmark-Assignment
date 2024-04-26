@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Benchmark_Assignment
 {
-    class MyClass : INotifyPropertyChanged
+   public class MyClass : INotifyPropertyChanged
     {
         private string _name;
         private string _type;

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Benchmark_Assignment
 {
-    class FileManager
+   public class FileManager
     {
         private const string InitialDataFileName = "ImageData.txt";
         private const string SavedDataFileName = "SavedImageData.txt";

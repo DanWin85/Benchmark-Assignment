@@ -103,6 +103,24 @@ namespace Benchmark_Assignment
                 Filter.InitialData = Initial_data;
                 Filter.mainCanvas = mainCanvas;
                 Filter.SetGridInstances(Image1Stack, Image2Stack, Image3Stack, Image4Stack, Image5Stack);
+
+                // Set visibility of image elements to Visible
+                Image1Stack.Visibility = Visibility.Visible;
+                Image2Stack.Visibility = Visibility.Visible;
+                Image3Stack.Visibility = Visibility.Visible;
+                Image4Stack.Visibility = Visibility.Visible;
+                Image5Stack.Visibility = Visibility.Visible;
+
+                if (!mainCanvas.Children.Contains(Image1Stack))
+                    mainCanvas.Children.Add(Image1Stack);
+                if (!mainCanvas.Children.Contains(Image2Stack))
+                    mainCanvas.Children.Add(Image2Stack);
+                if (!mainCanvas.Children.Contains(Image3Stack))
+                    mainCanvas.Children.Add(Image3Stack);
+                if (!mainCanvas.Children.Contains(Image4Stack))
+                    mainCanvas.Children.Add(Image4Stack);
+                if (!mainCanvas.Children.Contains(Image5Stack))
+                    mainCanvas.Children.Add(Image5Stack);
             }
             else
             {
@@ -114,6 +132,9 @@ namespace Benchmark_Assignment
 
         public void LoadImage()
         {
+            StopTimer();
+
+            mainCanvas.Children.Clear();
             //Here a new list is created is created to save all the names of images so these can be used to load the corresponding images on the canvas
             List<string> Name = new List<string>();
 
@@ -131,34 +152,34 @@ namespace Benchmark_Assignment
                     //Creating a Uri object img1. Loading the relative image pathway
                     Uri img1 = new Uri("pack://application:,,,/images/fighterjet.jpg");
                     Image1.Source = new BitmapImage(img1);
-                    ImageAnimation();
+                    
                 }
                 else if (imageName == "vintageaircraft")
                 {
                     Uri img2 = new Uri("pack://application:,,,/images/vintageaircraft.jpg");
                     Image2.Source = new BitmapImage(img2);
-                    ImageAnimation();
+                    
                 }
                 else if (imageName == "Hotairballoon")
                 {
                     Uri img3 = new Uri("pack://application:,,,/images/Hotairballoon.jpg");
                     Image3.Source = new BitmapImage(img3);
-                    ImageAnimation();
+                    
                 }
                 else if (imageName == "lightaircraft")
                 {
                     Uri img4 = new Uri("pack://application:,,,/images/lightaircraft.jpg");
                     Image4.Source = new BitmapImage(img4);
-                    ImageAnimation();
+                    
                 }
                 else if (imageName == "RedHelicopter")
                 {
                     Uri img5 = new Uri("pack://application:,,,/images/RedHelicopter.jpg");
                     Image5.Source = new BitmapImage(img5);
-                    ImageAnimation();
+                    
                 }
-
             }
+            ImageAnimation();
         }
 
         public void ImageAnimation()
@@ -168,10 +189,17 @@ namespace Benchmark_Assignment
             // calling the event handler to move the image x direction(Left or Right)
             timer.Tick += new EventHandler(timer_TickTop);
             // Seting interval for dispatch timer Animation will repeat every 2 milliseconds
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 5);
             //Starting dispatch timer.
             timer.Start();
 
+        }
+
+        private void StopTimer()
+        {
+            timer.Tick -= new EventHandler(Timer_xdirection);
+            timer.Tick -= new EventHandler(timer_TickTop);
+            timer.Stop();
         }
 
         private void PopulateSpeedXList(List<string> speedXList)
@@ -696,6 +724,10 @@ namespace Benchmark_Assignment
                     item.CurrentPositionY.ToString()
                 );
 
+                // Update the speed values
+                updatedItem.Speed_x = Filter.GetSpeed_x(item.Name).ToString();
+                updatedItem.Speed_y = Filter.GetSpeed_y(item.Name).ToString();
+
                 // Add the updated item to the currentData collection
                 currentData.Add(updatedItem);
             }
@@ -719,6 +751,8 @@ namespace Benchmark_Assignment
 
             // Update the StatusListBox with the loaded data
             ListBox.ItemsSource = savedData;
+
+            LoadImage();
         }
 
         private void ClearAllButton_Click(object sender, RoutedEventArgs e)
@@ -730,6 +764,8 @@ namespace Benchmark_Assignment
             mainCanvas.Children.Clear();
             PopulateSpeedXList(Speed_x);
             PopulateSpeedYList(Speed_y);
+
+            timer.Stop();
         }
     }
 }

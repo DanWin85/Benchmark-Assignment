@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace Benchmark_Assignment
 {
-    class Filter :  INotifyPropertyChanged
+   public class Filter :  INotifyPropertyChanged
     {
         private ObservableCollection<MyClass> _initialData;
 

@@ -45,7 +45,7 @@
             <TextBox x:Name="TextBox" Width="228" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" />
         </StackPanel>
 
-        <Grid Grid.Column="1" Margin="0,325,0,0">
+        <Grid Grid.Column="1" Margin="0,310,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -57,17 +57,17 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Content="Load initial data" Width="125" Height="55" Click="LoadInitialDataButton_Click" Grid.Row="1" Grid.Column="0" Margin="5" />
-            <Button Content="Sort By A-Z" Width="125" Height="55" Click="SortByAZButton_Click" Grid.Row="2" Grid.Column="1" Margin="5" />
-            <Button Content="Sort By Z-A" Width="125" Height="55" Click="SortByZAButton_Click" Grid.Row="1" Grid.Column="1" Margin="5" />
+            <Button Content="Load initial data" Width="125" Height="90" Click="LoadInitialDataButton_Click" Grid.Row="1" Grid.Column="0" Margin="5" />
+            <Button Content="Sort By A-Z" Width="125" Height="90" Click="SortByAZButton_Click" Grid.Row="2" Grid.Column="1" Margin="5" />
+            <Button Content="Sort By Z-A" Width="125" Height="90" Click="SortByZAButton_Click" Grid.Row="1" Grid.Column="1" Margin="5" />
 
-            <Button Content="Remove Selected Object" Width="125" Height="55" Click="RemoveSelectedButton_Click" Grid.Row="0" Grid.Column="1" Margin="5" />
-            <Button Content="Search by Type" Width="125" Height="55" Click="SearchByTypeButton_Click" Grid.Row="0" Grid.Column="2" Margin="5" />
-            <Button Content="Show Status" Width="125" Height="55"  Click="ShowStatusButton_Click" Grid.Row="0" Grid.Column="0" Margin="5" />
+            <Button Content="Remove Selected Object" Width="125" Height="90" Click="RemoveSelectedButton_Click" Grid.Row="0" Grid.Column="1" Margin="5" />
+            <Button Content="Search by Type" Width="125" Height="90" Click="SearchByTypeButton_Click" Grid.Row="0" Grid.Column="2" Margin="5" />
+            <Button Content="Show Status" Width="125" Height="90"  Click="ShowStatusButton_Click" Grid.Row="0" Grid.Column="0" Margin="5" />
 
-            <Button Content="Save Current List" Width="125" Height="55" Click="SaveCurrentButton_Click" Grid.Row="1" Grid.Column="2" Margin="5" />
-            <Button Content="Load Previous Saving" Width="125" Height="55" Click="LoadPreviousSaveButton_Click" Grid.Row="2" Grid.Column="0" Margin="5" />
-            <Button Content="Clear All" Width="125" Height="55" Click="ClearAllButton_Click" Grid.Row="2" Grid.Column="2" Margin="5" />
+            <Button Content="Save Current List" Width="125" Height="90" Click="SaveCurrentButton_Click" Grid.Row="1" Grid.Column="2" Margin="5" />
+            <Button Content="Load Previous Saving" Width="125" Height="90" Click="LoadPreviousSaveButton_Click" Grid.Row="2" Grid.Column="0" Margin="5" />
+            <Button Content="Clear All" Width="125" Height="90" Click="ClearAllButton_Click" Grid.Row="2" Grid.Column="2" Margin="5" />
         </Grid>
     </Grid>
 </Window>
