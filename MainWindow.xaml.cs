@@ -85,7 +85,8 @@ namespace Benchmark_Assignment
 
                         // Add the image information to the Initial_data list
                         Initial_data.Add(imageInfo);
-
+                        PopulateSpeedXList(Initial_data, Speed_x);
+                        PopulateSpeedYList(Initial_data, Speed_y);
                     }
                     else
                     {
@@ -132,99 +133,105 @@ namespace Benchmark_Assignment
 
         public void LoadImage()
         {
-            StopTimer();
+            // Stop the timer if it's already running
+            if (timer.IsEnabled)
+            {
+                StopTimer();
+            } 
 
+            // Clear the mainCanvas if already populated
             mainCanvas.Children.Clear();
-            //Here a new list is created is created to save all the names of images so these can be used to load the corresponding images on the canvas
-            List<string> Name = new List<string>();
 
-            //we are iterating over the initial_data object list to access the names of images and add them to the new list-Name
-            foreach (MyClass a in Initial_data)
+            int index = 0;
+            foreach (MyClass item in Filter.InitialData)
             {
-                Name.Add(a.Name);
+                string imageName = item.Name.ToLower();
+                Uri imageUri = new Uri($"pack://application:,,,/images/{imageName}.jpg");
+
+                if (index == 0)
+                {
+                    Image1.Source = new BitmapImage(imageUri);
+                    mainCanvas.Children.Add(Image1Stack);
+                }
+                else if (index == 1)
+                {
+                    Image2.Source = new BitmapImage(imageUri);
+                    mainCanvas.Children.Add(Image2Stack);
+                }
+                else if (index == 2)
+                {
+                    Image3.Source = new BitmapImage(imageUri);
+                    mainCanvas.Children.Add(Image3Stack);
+                }
+                else if (index == 3)
+                {
+                    Image4.Source = new BitmapImage(imageUri);
+                    mainCanvas.Children.Add(Image4Stack);
+                }
+                else if (index == 4)
+                {
+                    Image5.Source = new BitmapImage(imageUri);
+                    mainCanvas.Children.Add(Image5Stack);
+                }
+
+                index++;
             }
 
-            // Looping through the Initial_data for the name
-            foreach (string imageName in Name)
-            {
-                if (imageName == "fighterjet")
-                {
-                    //Creating a Uri object img1. Loading the relative image pathway
-                    Uri img1 = new Uri("pack://application:,,,/images/fighterjet.jpg");
-                    Image1.Source = new BitmapImage(img1);
-                    
-                }
-                else if (imageName == "vintageaircraft")
-                {
-                    Uri img2 = new Uri("pack://application:,,,/images/vintageaircraft.jpg");
-                    Image2.Source = new BitmapImage(img2);
-                    
-                }
-                else if (imageName == "Hotairballoon")
-                {
-                    Uri img3 = new Uri("pack://application:,,,/images/Hotairballoon.jpg");
-                    Image3.Source = new BitmapImage(img3);
-                    
-                }
-                else if (imageName == "lightaircraft")
-                {
-                    Uri img4 = new Uri("pack://application:,,,/images/lightaircraft.jpg");
-                    Image4.Source = new BitmapImage(img4);
-                    
-                }
-                else if (imageName == "RedHelicopter")
-                {
-                    Uri img5 = new Uri("pack://application:,,,/images/RedHelicopter.jpg");
-                    Image5.Source = new BitmapImage(img5);
-                    
-                }
-            }
-            ImageAnimation();
+            ImageAnimation(Filter.InitialData);
         }
 
-        public void ImageAnimation()
+        public void ImageAnimation(ObservableCollection<MyClass> loadedData)
         {
-            // calling the event handler to move the image y direction(Up or Down)
-            timer.Tick += new EventHandler(Timer_xdirection);
-            // calling the event handler to move the image x direction(Left or Right)
-            timer.Tick += new EventHandler(timer_TickTop);
-            // Seting interval for dispatch timer Animation will repeat every 2 milliseconds
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 5);
-            //Starting dispatch timer.
-            timer.Start();
+            // Stop the timer if it's already running
+            if (timer.IsEnabled)
+            {
+                StopTimer();
+            }
 
+            // Populate the Speed_x and Speed_y lists from the loaded data
+            PopulateSpeedXList(loadedData, Speed_x);
+            PopulateSpeedYList(loadedData, Speed_y);
+
+            // Calling the event handlers to move the images
+            timer.Tick += new EventHandler(Timer_xdirection);
+            timer.Tick += new EventHandler(timer_TickTop);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 5);
+            timer.Start();
         }
 
         private void StopTimer()
         {
-            timer.Tick -= new EventHandler(Timer_xdirection);
-            timer.Tick -= new EventHandler(timer_TickTop);
-            timer.Stop();
+            if (timer.IsEnabled)
+            {
+                timer.Tick -= new EventHandler(Timer_xdirection);
+                timer.Tick -= new EventHandler(timer_TickTop);
+                timer.Stop();
+            }
         }
 
-        private void PopulateSpeedXList(List<string> speedXList)
+        private void PopulateSpeedXList(ObservableCollection<MyClass> data, List<string> speedXList)
         {
             speedXList.Clear();
-            foreach (MyClass c in Initial_data)
+            foreach (MyClass c in data)
             {
                 speedXList.Add(c.Speed_x.TrimStart('-'));
             }
         }
 
-        private void PopulateSpeedYList(List<string> speedYList)
+        private void PopulateSpeedYList(ObservableCollection<MyClass> data, List<string> speedYList)
         {
             speedYList.Clear();
-            foreach (MyClass c in Initial_data)
+            foreach (MyClass c in data)
             {
                 speedYList.Add(c.Speed_y.TrimStart('-'));
             }
         }
-
+        //Timer Method 1
         void Timer_xdirection(object sender, EventArgs e)
         {
             //List containing Speed_x list
             List<string> Speed_x = new List<string>();
-            PopulateSpeedXList(Speed_x);
+            PopulateSpeedXList(Initial_data, Speed_x);
 
             double image1speedX = 0;
             if (Speed_x.Count > 0)
@@ -233,9 +240,6 @@ namespace Benchmark_Assignment
                  image1speedX = Convert.ToDouble(Speed_x[0]);
             }
             
-
-
-
             //Getting left property of the image grid stack with respect to canvas
             long image1Positionx = Convert.ToInt64(Image1Stack.GetValue(Canvas.LeftProperty));
 
@@ -417,13 +421,13 @@ namespace Benchmark_Assignment
             }
         }
 
-        //Timer Method2
+        //Timer Method 2
         void timer_TickTop(object sender, EventArgs e)
         {
 
             //List containing Speed_y list
             List<string> Speed_y = new List<string>();
-            PopulateSpeedYList(Speed_y);
+            PopulateSpeedYList(Initial_data, Speed_y);
             double image1speedY = 0;
             if(Speed_y.Count > 0)
             {
@@ -661,8 +665,9 @@ namespace Benchmark_Assignment
 
                 // Remove the corresponding animated image from the Canvas
                 RemoveAnimatedImage(selectedItem.Name);
-                PopulateSpeedXList(Speed_x);
-                PopulateSpeedYList(Speed_y);
+                PopulateSpeedXList(Filter.InitialData, Speed_x);
+                PopulateSpeedYList(Filter.InitialData, Speed_y);
+                //PopulateSpeedYList(Speed_y);
             }
             else
             {
@@ -706,10 +711,11 @@ namespace Benchmark_Assignment
             string keyword = TextBox.Text; // Get the keyword from the text box
             Filter.FilterByKeyword(keyword, mainCanvas, Image1Stack, Image2Stack, Image3Stack, Image4Stack, Image5Stack); // Call the FilterByKeyword method with the keyword and UI elements
         }
-        
+
         private void ShowStatusButton_Click(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<MyClass> currentData = new ObservableCollection<MyClass>();
+            // Create a temporary list to store the updated items
+            List<MyClass> updatedItems = new List<MyClass>();
 
             // Iterate through the InitialData collection
             foreach (MyClass item in Filter.InitialData)
@@ -728,13 +734,23 @@ namespace Benchmark_Assignment
                 updatedItem.Speed_x = Filter.GetSpeed_x(item.Name).ToString();
                 updatedItem.Speed_y = Filter.GetSpeed_y(item.Name).ToString();
 
-                // Add the updated item to the currentData collection
-                currentData.Add(updatedItem);
+                // Add the updated item to the temporary list
+                updatedItems.Add(updatedItem);
             }
-            // Update the itemsSource of the ListBox with the current data 
-            ListBox.ItemsSource = currentData;
+
+            // Clear the InitialData collection
+            Filter.InitialData.Clear();
+
+            // Add the updated items to the InitialData collection
+            foreach (var updatedItem in updatedItems)
+            {
+                Filter.InitialData.Add(updatedItem);
+            }
+
+            // Update the itemsSource of the ListBox with the updated InitialData
+            ListBox.ItemsSource = Filter.InitialData;
         }
-        
+
         private void SaveCurrentButton_Click(object sender, RoutedEventArgs e)
         {
             // Get the current data from the ListBox
@@ -742,28 +758,51 @@ namespace Benchmark_Assignment
 
             // Save the current data to the file
             FileManager.SaveCurrentData(currentData);
+
+            MessageBox.Show("List successfully saved.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void LoadPreviousSaveButton_Click(object sender, RoutedEventArgs e)
         {
+            StopTimer();
             // Load the saved data from the file
             ObservableCollection<MyClass> savedData = FileManager.LoadSavedData();
+
+            // Update the CurrentPositionX and CurrentPositionY properties for each item
+            foreach (var item in savedData)
+            {
+                item.CurrentPositionX = Convert.ToInt64(item.Position_x);
+                item.CurrentPositionY = Convert.ToInt64(item.Position_y);
+            }
 
             // Update the StatusListBox with the loaded data
             ListBox.ItemsSource = savedData;
 
+            // Create a new instance of the Filter class with the loaded data
+            Filter = new Filter(savedData);
+
+            // Set the necessary instances for the new Filter instance
+            Filter.mainCanvas = mainCanvas;
+            Filter.SetGridInstances(Image1Stack, Image2Stack, Image3Stack, Image4Stack, Image5Stack);
+
+            // Subscribe to the PropertyChanged event of the new Filter instance
+            Filter.PropertyChanged += Filter_PropertyChanged;
+
             LoadImage();
+            ImageAnimation(savedData);
         }
 
         private void ClearAllButton_Click(object sender, RoutedEventArgs e)
         {
             // Clear the InitialData collection
             Filter.InitialData.Clear();
+           
 
             // Clear the canvas
             mainCanvas.Children.Clear();
-            PopulateSpeedXList(Speed_x);
-            PopulateSpeedYList(Speed_y);
+            PopulateSpeedXList(Filter.InitialData, Speed_x);
+            PopulateSpeedYList(Filter.InitialData, Speed_y);
+            TextBox.Text = null;
 
             timer.Stop();
         }
