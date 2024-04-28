@@ -16,6 +16,24 @@ namespace Benchmark_Assignment
         private long _currentPositionX;
         private long _currentPositionY;
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            MyClass other = (MyClass)obj;
+            return Name == other.Name &&
+                   Type == other.Type &&
+                   Speed_x == other.Speed_x &&
+                   Speed_y == other.Speed_y &&
+                   Position_x == other.Position_x &&
+                   Position_y == other.Position_y;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Type, Speed_x, Speed_y, Position_x, Position_y);
+        }
         public long CurrentPositionX
         {
             get { return _currentPositionX; }

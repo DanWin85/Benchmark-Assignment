@@ -71,6 +71,8 @@ namespace Benchmark_Assignment
 
         private void RemoveImageFromCanvas(string imageName, Canvas mainCanvas, Grid Image1Stack, Grid Image2Stack, Grid Image3Stack, Grid Image4Stack, Grid Image5Stack)
         {
+            if (mainCanvas == null)
+                return;
             // Remove the UI element associated with the item from the canvas
             switch (imageName)
             {
