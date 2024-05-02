@@ -5,46 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="Benchmark_Assignment.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1000">
+        Title="Flying High" Height="650" Width="1000">
+    <!-- This is the main Window of the application -->
+    <!-- It has a height of 650 and a width of 1000 -->
+    
     <Grid>
+        <!-- The main Grid has two columns: one for the Canvas and one for the UI elements -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-
+            <!-- A Canvas with a gray background for displaying UI elements -->
         </Grid.RowDefinitions>
         <Canvas Grid.Column="1" Background="#393637"/>
-
+        <!-- The main Canvas where the images are displayed -->
         <Canvas Grid.Column="0" x:Name="mainCanvas">
             <Canvas.Background>
+                <!-- The background of the main Canvas is set to a blue sky image -->
                 <ImageBrush ImageSource="pack://application:,,,/images/Bluesky.jpg" />
             </Canvas.Background>
+            <!-- A Grid to hold the first image -->
             <Grid  x:Name="Image1Stack" Canvas.Left="50"  Canvas.Top="50"  Height="100" Width="100">
-                <Image x:Name="Image1" Margin="0,10,0,0"/>
+                <Image x:Name="Image1" Margin="0,10,0,0" Opacity="0.5"/>
             </Grid>
+            <!-- A Grid to hold the second image -->
             <Grid  x:Name="Image2Stack" Canvas.Left="200"  Canvas.Top="200"  Height="100" Width="100">
-                <Image x:Name="Image2" Margin="0,10,0,0" />
+                <Image x:Name="Image2" Margin="0,10,0,0" Opacity="0.5" />
             </Grid>
+            <!-- A Grid to hold the third image -->
             <Grid  x:Name="Image3Stack" Canvas.Left="150"  Canvas.Top="150"  Height="100" Width="100">
-                <Image x:Name="Image3" Margin="0,10,0,0" />
+                <Image x:Name="Image3" Margin="0,10,0,0" Opacity="0.5"/>
             </Grid>
+            <!-- A Grid to hold the fourth image -->
             <Grid  x:Name="Image4Stack" Canvas.Left="175"  Canvas.Top="450"  Height="100" Width="100">
-                <Image x:Name="Image4" Margin="0,10,0,0" />
+                <Image x:Name="Image4" Margin="0,10,0,0" Opacity="0.5" />
             </Grid>
+            <!-- A Grid to hold the fifth image -->
             <Grid  x:Name="Image5Stack" Canvas.Left="15"  Canvas.Top="45"  Height="100" Width="100">
-                <Image x:Name="Image5" Margin="0,10,0,0" />
+                <Image x:Name="Image5" Margin="0,10,0,0" Opacity="0.5" />
             </Grid>
         </Canvas>
-
+        
+        <!-- A ListBox to display the data -->
         <ListBox x:Name="ListBox" ItemsSource="{Binding Filter.InitialData, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" VerticalAlignment="Top" Grid.Column="1" Width="390" Height="250" Margin="0,5,0,0"/>
 
+        <!-- A TextBox for entering the search keyword -->
         <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,-60,0,0">
             <Label Content="Enter Aircraft Type for Search:" VerticalAlignment="Center"  Foreground="White" />
             <TextBox x:Name="TextBox" Width="228" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" />
         </StackPanel>
 
+        <!-- A Grid containing various buttons for different operations -->
         <Grid Grid.Column="1" Margin="0,310,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -57,16 +70,23 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+            <!-- Button for Loading the Initial Data -->
             <Button Content="Load initial data" Width="125" Height="90" Click="LoadInitialDataButton_Click" Grid.Row="1" Grid.Column="0" Margin="5" />
+            <!-- Button for sorting data in listbox A-Z -->
             <Button Content="Sort By A-Z" Width="125" Height="90" Click="SortByAZButton_Click" Grid.Row="2" Grid.Column="1" Margin="5" />
+            <!-- Button for sorting data in listbox Z-A -->
             <Button Content="Sort By Z-A" Width="125" Height="90" Click="SortByZAButton_Click" Grid.Row="1" Grid.Column="1" Margin="5" />
-
+            <!-- Button for Removing selected data in listbox -->
             <Button Content="Remove Selected Object" Width="125" Height="90" Click="RemoveSelectedButton_Click" Grid.Row="0" Grid.Column="1" Margin="5" />
+            <!-- Button for searching data by type -->
             <Button Content="Search by Type" Width="125" Height="90" Click="SearchByTypeButton_Click" Grid.Row="0" Grid.Column="2" Margin="5" />
+            <!-- Button for showing current status of objects in mainCanvas -->
             <Button Content="Show Status" Width="125" Height="90"  Click="ShowStatusButton_Click" Grid.Row="0" Grid.Column="0" Margin="5" />
-
+            <!-- Button for current data in listbox -->
             <Button Content="Save Current List" Width="125" Height="90" Click="SaveCurrentButton_Click" Grid.Row="1" Grid.Column="2" Margin="5" />
+            <!-- Button for loading saved data from a file -->
             <Button Content="Load Previous Saving" Width="125" Height="90" Click="LoadPreviousSaveButton_Click" Grid.Row="2" Grid.Column="0" Margin="5" />
+            <!-- Button for clearing all data from listbox and objects from mainCanvas -->
             <Button Content="Clear All" Width="125" Height="90" Click="ClearAllButton_Click" Grid.Row="2" Grid.Column="2" Margin="5" />
         </Grid>
     </Grid>

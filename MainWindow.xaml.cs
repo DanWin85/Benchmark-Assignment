@@ -12,6 +12,7 @@ namespace Benchmark_Assignment
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
+    // This is the main window class of the application
     public partial class MainWindow : Window
     {
         private FileManager? fileManager;
@@ -20,8 +21,8 @@ namespace Benchmark_Assignment
         private List<string> Speed_x = new List<string>();
         private List<string> Speed_y = new List<string>();
         DispatcherTimer timer = new DispatcherTimer();
-        //List<MyClass> Initial_data = new List<MyClass>();
 
+        // Strings to track the direction of each image
         private string Image1directionx = "right";
         private string Image1directionY = "down";
 
@@ -36,6 +37,8 @@ namespace Benchmark_Assignment
 
         private string Image5directionx = "right";
         private string Image5directionY = "down";
+
+        // Constructor to initialize the main window
         public MainWindow()
         {
             InitializeComponent();
@@ -52,12 +55,10 @@ namespace Benchmark_Assignment
 
         }
 
-
-
-
-
+        // Event handler for the "Load Initial Data" button click
         private void LoadInitialDataButton_Click(object sender, RoutedEventArgs e)
         {
+           
             string loadedData = fileManager.LoadInitialData();
 
             // Check if the loaded data is not null
@@ -130,7 +131,7 @@ namespace Benchmark_Assignment
             }
         }
 
-
+        // Method to load images and set up animation
         public void LoadImage()
         {
             // Stop the timer if it's already running
@@ -180,6 +181,7 @@ namespace Benchmark_Assignment
             ImageAnimation(Filter.InitialData);
         }
 
+        // Method to start the animation timer and event handlers
         public void ImageAnimation(ObservableCollection<MyClass> loadedData)
         {
             // Stop the timer if it's already running
@@ -199,6 +201,7 @@ namespace Benchmark_Assignment
             timer.Start();
         }
 
+        // Method to stop the animation timer
         private void StopTimer()
         {
             if (timer.IsEnabled)
@@ -209,6 +212,7 @@ namespace Benchmark_Assignment
             }
         }
 
+        // Method to populate the Speed_x list with values from the loaded data
         private void PopulateSpeedXList(ObservableCollection<MyClass> data, List<string> speedXList)
         {
             speedXList.Clear();
@@ -218,6 +222,7 @@ namespace Benchmark_Assignment
             }
         }
 
+        // Method to populate the Speed_y list with values from the loaded data
         private void PopulateSpeedYList(ObservableCollection<MyClass> data, List<string> speedYList)
         {
             speedYList.Clear();
@@ -226,7 +231,8 @@ namespace Benchmark_Assignment
                 speedYList.Add(c.Speed_y.TrimStart('-'));
             }
         }
-        //Timer Method 1
+
+        // Event handler for the animation timer (X-axis movement)
         void Timer_xdirection(object sender, EventArgs e)
         {
             //List containing Speed_x list
@@ -421,7 +427,7 @@ namespace Benchmark_Assignment
             }
         }
 
-        //Timer Method 2
+        // Event handler for the animation timer (Y-axis movement)
         void timer_TickTop(object sender, EventArgs e)
         {
 
@@ -634,24 +640,32 @@ namespace Benchmark_Assignment
             }
         }
 
+        // Event handler for the "Sort by A-Z" button click
         private void SortByAZButton_Click(object sender, RoutedEventArgs e)
         {
+            //Pointing to the Filter class and calling the SortAscending method in that class 
+
             Filter.SortAscending();
         }
 
+        // Event handler for the "Sort by Z-A" button click
         private void SortByZAButton_Click(object sender, RoutedEventArgs e)
         { 
+            //Pointing to the Filter class and calling the SortDescending method in that class 
+
             Filter.SortDescending();
         }
 
+        // Event handler for the Filter's PropertyChanged event
         private void Filter_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Filter.InitialData))
             {
-              
+                // Handle changes to the InitialData collection
             }
         }
 
+        // Event handler for the "Remove Selected" button click
         private void RemoveSelectedButton_Click(object sender, RoutedEventArgs e)
         {
             // Check if an item is selected in the ListBox
@@ -667,7 +681,7 @@ namespace Benchmark_Assignment
                 RemoveAnimatedImage(selectedItem.Name);
                 PopulateSpeedXList(Filter.InitialData, Speed_x);
                 PopulateSpeedYList(Filter.InitialData, Speed_y);
-                //PopulateSpeedYList(Speed_y);
+                
             }
             else
             {
@@ -676,6 +690,7 @@ namespace Benchmark_Assignment
             }
         }
 
+        // Method to remove the animated image from the Canvas based on the image name
         private void RemoveAnimatedImage(string imageName)
         {
             // Determine which animated image corresponds to the given image name and remove it from the Canvas
@@ -706,12 +721,14 @@ namespace Benchmark_Assignment
             }
         }
 
+        // Event handler for the "Search by Type" button click
         private void SearchByTypeButton_Click(object sender, RoutedEventArgs e)
         {
             string keyword = TextBox.Text; // Get the keyword from the text box
-            Filter.FilterByKeyword(keyword, mainCanvas, Image1Stack, Image2Stack, Image3Stack, Image4Stack, Image5Stack); // Call the FilterByKeyword method with the keyword and UI elements
+            Filter.FilterByKeyword(keyword, mainCanvas, Image1Stack, Image2Stack, Image3Stack, Image4Stack, Image5Stack); // Point to the Filter class and call the FilterByKeyword method with the keyword and UI elements
         }
 
+        // Event handler for the "Show Status" button click
         private void ShowStatusButton_Click(object sender, RoutedEventArgs e)
         {
             // Create a temporary list to store the updated items
@@ -751,6 +768,7 @@ namespace Benchmark_Assignment
             ListBox.ItemsSource = Filter.InitialData;
         }
 
+        // Event handler for the "Save Current" button click
         private void SaveCurrentButton_Click(object sender, RoutedEventArgs e)
         {
             // Get the current data from the ListBox
@@ -759,12 +777,16 @@ namespace Benchmark_Assignment
             // Save the current data to the file
             FileManager.SaveCurrentData(currentData);
 
+            // Display confirmation message of a successful save
             MessageBox.Show("List successfully saved.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        // Event handler for the "Load Previous Save" button click
         private void LoadPreviousSaveButton_Click(object sender, RoutedEventArgs e)
         {
+            //Stop timer for later reanimation
             StopTimer();
+
             // Load the saved data from the file
             ObservableCollection<MyClass> savedData = FileManager.LoadSavedData();
 
@@ -775,7 +797,7 @@ namespace Benchmark_Assignment
                 item.CurrentPositionY = Convert.ToInt64(item.Position_y);
             }
 
-            // Update the StatusListBox with the loaded data
+            // Update the ListBox with the loaded data
             ListBox.ItemsSource = savedData;
 
             // Create a new instance of the Filter class with the loaded data
@@ -788,22 +810,25 @@ namespace Benchmark_Assignment
             // Subscribe to the PropertyChanged event of the new Filter instance
             Filter.PropertyChanged += Filter_PropertyChanged;
 
+            //call the load image method
             LoadImage();
+            //call the ImageAnimation method with the new savedData
             ImageAnimation(savedData);
         }
 
+        // Event handler for the "Clear All" button click
         private void ClearAllButton_Click(object sender, RoutedEventArgs e)
         {
             // Clear the InitialData collection
             Filter.InitialData.Clear();
-           
-
             // Clear the canvas
             mainCanvas.Children.Clear();
+            //Populate the Speed_x and Speed_y lists with data from the cleared InitialData 
             PopulateSpeedXList(Filter.InitialData, Speed_x);
             PopulateSpeedYList(Filter.InitialData, Speed_y);
+            //Remove any text in the TextBox
             TextBox.Text = null;
-
+            //Stop the timer
             timer.Stop();
         }
     }

@@ -6,27 +6,33 @@ using System.Windows.Controls;
 
 namespace Benchmark_Assignment
 {
-   public class Filter :  INotifyPropertyChanged
+    // This class is responsible for filtering and sorting the data
+    // It implements the INotifyPropertyChanged interface to notify when the InitialData property changes
+    public class Filter :  INotifyPropertyChanged
     {
         private ObservableCollection<MyClass> _initialData;
-
+        // Event to notify when a property value changes
         public event PropertyChangedEventHandler PropertyChanged;
+        // Property to store the main canvas reference
         public Canvas mainCanvas { get; set; }
+        // Properties to store the grid instances for each image
         public Grid Image1Stack { get; set; }
         public Grid Image2Stack { get; set; }
         public Grid Image3Stack { get; set; }
         public Grid Image4Stack { get; set; }
         public Grid Image5Stack { get; set; }
+        // Constructor to initialize the Filter with the initial data
         public Filter(ObservableCollection<MyClass> initialData)
         {
             _initialData = initialData;
         }
-
+        // Method to raise the PropertyChanged event
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        // Property to get or set the initial data
+        // Raises the PropertyChanged event when the value changes
         public ObservableCollection<MyClass> InitialData
         {
             get { return _initialData; }
@@ -36,7 +42,7 @@ namespace Benchmark_Assignment
                 OnPropertyChanged(nameof(InitialData));
             }
         }
-
+        // Method to filter the data based on a keyword
         public void FilterByKeyword(string keyword, Canvas mainCanvas, Grid Image1Stack, Grid Image2Stack, Grid Image3Stack, Grid Image4Stack, Grid Image5Stack)
         {
             if (string.IsNullOrWhiteSpace(keyword))
@@ -68,9 +74,10 @@ namespace Benchmark_Assignment
                 }
             }
         }
-
+        // Method to remove an image from the canvas based on the image name
         private void RemoveImageFromCanvas(string imageName, Canvas mainCanvas, Grid Image1Stack, Grid Image2Stack, Grid Image3Stack, Grid Image4Stack, Grid Image5Stack)
         {
+            //Check to see if mainCanvas is empty
             if (mainCanvas == null)
                 return;
             // Remove the UI element associated with the item from the canvas
@@ -97,18 +104,21 @@ namespace Benchmark_Assignment
             }
         }
 
+        // Method to sort the data in ascending order based on the Type property
         public void SortAscending()
         {
             var sortedData = new ObservableCollection<MyClass>(_initialData.OrderBy(item => item.Type));
             UpdateInitialData(sortedData);
         }
 
+        // Method to sort the data in descending order based on the Type property
         public void SortDescending()
         {
             var sortedData = new ObservableCollection<MyClass>(_initialData.OrderByDescending(item => item.Type));
             UpdateInitialData(sortedData);
         }
 
+        // Helper method to update the InitialData collection with the new sorted data
         private void UpdateInitialData(ObservableCollection<MyClass> newData)
         {
             InitialData.Clear();
@@ -117,6 +127,7 @@ namespace Benchmark_Assignment
                 InitialData.Add(item);
             }
         }
+        // Method to set the grid instances for each image
         public void SetGridInstances(Grid image1Stack, Grid image2Stack, Grid image3Stack, Grid image4Stack, Grid image5Stack)
         {
             Image1Stack = image1Stack;
@@ -125,6 +136,8 @@ namespace Benchmark_Assignment
             Image4Stack = image4Stack;
             Image5Stack = image5Stack;
         }
+
+        // Method to get the current position (left) of an image on the canvas
         public long GetGridLeft(string imageName)
         {
             long currentPositionX = 0;
@@ -150,12 +163,10 @@ namespace Benchmark_Assignment
                         break;
                 }
             }
-         
-
             return currentPositionX;
         }
 
-        
+        // Method to get the current position (top) of an image on the canvas
         public long GetGridTop (string imageName)
         {
             long currentPositionY = 0;
@@ -182,7 +193,8 @@ namespace Benchmark_Assignment
             }
             return currentPositionY;
         }
-        
+
+        // Method to get the speed on the X-axis for a specific image
         public double GetSpeed_x(string imageName)
         {
             double currentSpeedX = 0;
@@ -197,6 +209,7 @@ namespace Benchmark_Assignment
             return currentSpeedX;
         }
 
+        // Method to get the speed on the Y-axis for a specific image
         public double GetSpeed_y(string imageName)
         {
             double currentSpeedY = 0;
