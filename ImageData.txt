@@ -1,5 +1,5 @@
-﻿fighterjet, plane, 5.1, 3.6, 375, 75
-vintageaircraft, plane, 4.5, 3.6, 350, 135
+﻿fighterjet, plane, 5.1, 3.6, 375, 175
+vintageaircraft, plane, 1.5, 3.6, 320, 135
 Hotairballoon, Balloon, 2.0, 3.6, 256, 126
 lightaircraft, plane, 1.2, 1.0, 385, 203
-RedHelicopter, chopper, 2.0, 4.8, 695, 580
+RedHelicopter, chopper, 2.0, 1.8, 225, 380
