@@ -15,11 +15,17 @@ namespace Benchmark_Assignment
     // This is the main window class of the application
     public partial class MainWindow : Window
     {
+        // Declares a nullable FileManager instance variable
         private FileManager? fileManager;
+        // Declares a property of type Filter
         private Filter Filter { get; set; }
+        // Declares an ObservableCollection of MyClass objects to store initial data
         ObservableCollection<MyClass> Initial_data = new ObservableCollection<MyClass>();
+        // Declares a list of strings to store speed_x values
         private List<string> Speed_x = new List<string>();
+        // Declares a list of strings to store speed_y values
         private List<string> Speed_y = new List<string>();
+        // Declares a DispatcherTimer instance
         DispatcherTimer timer = new DispatcherTimer();
 
         // Strings to track the direction of each image
@@ -42,15 +48,17 @@ namespace Benchmark_Assignment
         public MainWindow()
         {
             InitializeComponent();
-
+            // Creates a new instance of the FileManager class
             fileManager = new FileManager();
-
+            // Creates a new instance of the Filter class, passing the Initial_data collection
             Filter = new Filter(Initial_data);
-
+            // Subscribes to the PropertyChanged event of the Filter instance
             Filter.PropertyChanged += Filter_PropertyChanged;
-
+            // Creates a new instance of the CollectionViewSource class
             CollectionViewSource viewSource = new CollectionViewSource();
+            // Sets the Source property of the CollectionViewSource to the InitialData collection of the Filter instance
             viewSource.Source = Filter.InitialData;
+            // Sets the ItemsSource property of the ListBox control to the View property of the CollectionViewSource
             ListBox.ItemsSource = viewSource.View;
 
         }
@@ -58,7 +66,7 @@ namespace Benchmark_Assignment
         // Event handler for the "Load Initial Data" button click
         private void LoadInitialDataButton_Click(object sender, RoutedEventArgs e)
         {
-           
+           // Create a string and point to the filemanager class and call the loadinitaldata method of that class
             string loadedData = fileManager.LoadInitialData();
 
             // Check if the loaded data is not null
@@ -112,7 +120,7 @@ namespace Benchmark_Assignment
                 Image3Stack.Visibility = Visibility.Visible;
                 Image4Stack.Visibility = Visibility.Visible;
                 Image5Stack.Visibility = Visibility.Visible;
-
+                //Add the image stacks to the mainCanvas
                 if (!mainCanvas.Children.Contains(Image1Stack))
                     mainCanvas.Children.Add(Image1Stack);
                 if (!mainCanvas.Children.Contains(Image2Stack))
@@ -143,42 +151,43 @@ namespace Benchmark_Assignment
             // Clear the mainCanvas if already populated
             mainCanvas.Children.Clear();
 
-            int index = 0;
-            foreach (MyClass item in Filter.InitialData)
+            int index = 0; // Initialize an index variable to keep track of the current iteration
+
+            foreach (MyClass item in Filter.InitialData) // Loop through each item in the InitialData collection
             {
-                string imageName = item.Name.ToLower();
-                Uri imageUri = new Uri($"pack://application:,,,/images/{imageName}.jpg");
+                string imageName = item.Name.ToLower(); // Get the name of the item and convert it to lowercase
+                Uri imageUri = new Uri($"pack://application:,,,/images/{imageName}.jpg"); // Create a URI for the image file based on the item name
 
-                if (index == 0)
+                if (index == 0) // If it's the first iteration
                 {
-                    Image1.Source = new BitmapImage(imageUri);
-                    mainCanvas.Children.Add(Image1Stack);
+                    Image1.Source = new BitmapImage(imageUri); // Set the Source property of Image1 to the image URI
+                    mainCanvas.Children.Add(Image1Stack); // Add Image1Stack to the mainCanvas
                 }
-                else if (index == 1)
+                else if (index == 1) // If it's the second iteration
                 {
-                    Image2.Source = new BitmapImage(imageUri);
-                    mainCanvas.Children.Add(Image2Stack);
+                    Image2.Source = new BitmapImage(imageUri); // Set the Source property of Image2 to the image URI
+                    mainCanvas.Children.Add(Image2Stack); // Add Image2Stack to the mainCanvas
                 }
-                else if (index == 2)
+                else if (index == 2) // If it's the third iteration
                 {
-                    Image3.Source = new BitmapImage(imageUri);
-                    mainCanvas.Children.Add(Image3Stack);
+                    Image3.Source = new BitmapImage(imageUri); // Set the Source property of Image3 to the image URI
+                    mainCanvas.Children.Add(Image3Stack); // Add Image3Stack to the mainCanvas
                 }
-                else if (index == 3)
+                else if (index == 3) // If it's the fourth iteration
                 {
-                    Image4.Source = new BitmapImage(imageUri);
-                    mainCanvas.Children.Add(Image4Stack);
+                    Image4.Source = new BitmapImage(imageUri); // Set the Source property of Image4 to the image URI
+                    mainCanvas.Children.Add(Image4Stack); // Add Image4Stack to the mainCanvas
                 }
-                else if (index == 4)
+                else if (index == 4) // If it's the fifth iteration
                 {
-                    Image5.Source = new BitmapImage(imageUri);
-                    mainCanvas.Children.Add(Image5Stack);
+                    Image5.Source = new BitmapImage(imageUri); // Set the Source property of Image5 to the image URI
+                    mainCanvas.Children.Add(Image5Stack); // Add Image5Stack to the mainCanvas
                 }
 
-                index++;
+                index++; // Increment the index for the next iteration
             }
 
-            ImageAnimation(Filter.InitialData);
+            ImageAnimation(Filter.InitialData); // Call the ImageAnimation method with the InitialData collection
         }
 
         // Method to start the animation timer and event handlers
@@ -650,7 +659,6 @@ namespace Benchmark_Assignment
         private void SortByAZButton_Click(object sender, RoutedEventArgs e)
         {
             //Pointing to the Filter class and calling the SortAscending method in the class 
-
             Filter.SortAscending();
         }
 
@@ -658,7 +666,6 @@ namespace Benchmark_Assignment
         private void SortByZAButton_Click(object sender, RoutedEventArgs e)
         { 
             //Pointing to the Filter class and calling the SortDescending method in the class 
-
             Filter.SortDescending();
         }
 
